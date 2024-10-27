@@ -1,0 +1,71 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:neura_chat/core/utils/functions/responsive_font.dart';
+
+abstract class TextStyles {
+  // Regular styles
+  static TextStyle styleRegular12(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 12, context: context),
+    );
+  }
+
+  static TextStyle styleRegular14(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 14, context: context),
+    );
+  }
+
+  static TextStyle styleRegular16(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 16, context: context),
+    );
+  }
+
+  static TextStyle styleRegular18(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 18, context: context),
+    );
+  }
+
+  static TextStyle styleRegular20(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 20, context: context),
+    );
+  }
+
+  // Bold styles
+  static TextStyle styleBold14(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 14, context: context),
+    );
+  }
+
+  static TextStyle styleBold16(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 16, context: context),
+    );
+  }
+
+  static TextStyle styleBold18(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 18, context: context),
+    );
+  }
+
+  static TextStyle styleBold20(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 20, context: context),
+    );
+  }
+}

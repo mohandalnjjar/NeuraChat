@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:swift_mart/features/auth/data/repos/auth_repo_impl.dart';
+import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 
 part 'rest_password_state.dart';
 

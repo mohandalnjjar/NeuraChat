@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:swift_mart/features/auth/data/repos/auth_repo_impl.dart';
+import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 
 part 'login_state.dart';
 

@@ -68,4 +68,14 @@ abstract class TextStyles {
       fontSize: responsiveFontSize(fontSize: 20, context: context),
     );
   }
+
+
+  // Semi-bold weight
+
+  static TextStyle styleSemiBold27(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: responsiveFontSize(fontSize: 27, context: context),
+    );
+  }
 }

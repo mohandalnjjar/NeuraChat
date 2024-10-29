@@ -11,7 +11,7 @@ class CheckAuth extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const MainPageView();
+          return const Text('eeeeeeeeee');
         } else {
           return const LoginView();
         }

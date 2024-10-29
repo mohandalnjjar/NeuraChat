@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:neura_chat/core/constants/app_text_styles.dart';
+import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class MainView extends StatelessWidget {
   const MainView({
@@ -13,7 +13,7 @@ class MainView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Text(
-            'Hi, Muhanad',
+            S.of(context).NeuraChat,
             style: TextStyles.styleRegular20(context),
           ),
         ),

@@ -31,10 +31,10 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
         isDark ? AppPalette.kDarkScaffoldColor : AppPalette.kLightScaffoldColor,
     brightness: isDark ? Brightness.dark : Brightness.light,
     textTheme: isDark
-        ? GoogleFonts.nunitoTextTheme(
+        ? GoogleFonts.poppinsTextTheme(
             ThemeData.dark().textTheme,
           )
-        : GoogleFonts.nunitoTextTheme(),
+        : GoogleFonts.poppinsTextTheme(),
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: isDark
           ? AppPalette.kDarkScaffoldColor
@@ -43,7 +43,6 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
         borderRadius: BorderRadius.circular(0),
       ),
     ),
-    
     dialogTheme: DialogTheme(
       backgroundColor: isDark
           ? AppPalette.kDarkScaffoldColor

@@ -56,6 +56,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Tyr Again`
+  String get TyrAgain {
+    return Intl.message(
+      'Tyr Again',
+      name: 'TyrAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changed Successfully`
+  String get ChangedSuccessfully {
+    return Intl.message(
+      'Changed Successfully',
+      name: 'ChangedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading`
+  String get Loading {
+    return Intl.message(
+      'Loading',
+      name: 'Loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get Language {
+    return Intl.message(
+      'Language',
+      name: 'Language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already Used`
+  String get AlreadyUsed {
+    return Intl.message(
+      'Already Used',
+      name: 'AlreadyUsed',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

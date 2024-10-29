@@ -19,6 +19,13 @@ abstract class TextStyles {
     );
   }
 
+  static TextStyle styleRegular15(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 14, context: context),
+    );
+  }
+
   static TextStyle styleRegular16(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w400,
@@ -69,13 +76,26 @@ abstract class TextStyles {
     );
   }
 
-
   // Semi-bold weight
 
   static TextStyle styleSemiBold27(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: responsiveFontSize(fontSize: 27, context: context),
+    );
+  }
+
+  static TextStyle styleSemiBold18(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: responsiveFontSize(fontSize: 18, context: context),
+    );
+  }
+
+  static TextStyle style700w16(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 16, context: context),
     );
   }
 }

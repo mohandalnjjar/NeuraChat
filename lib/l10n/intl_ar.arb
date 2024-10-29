@@ -1,5 +1,10 @@
 {
 
-    "NeuraChat" : "نيورا شات"
+    "NeuraChat" : "نيورا شات",
+    "TryAgain": "حاول مرة أخرى",
+    "ChangedSuccessfully": "تم التغيير بنجاح",
+    "Loading": "جار التحميل",
+    "Language": "اللغة",
+    "AlreadyUsed": "مستخدم بالفعل"
   
 }

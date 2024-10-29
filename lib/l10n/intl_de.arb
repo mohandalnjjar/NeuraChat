@@ -1,5 +1,11 @@
 {
 
-    "NeuraChat" : "Neura Chat"
+    "NeuraChat" : "Neura Chat",
+    "TryAgain": "Versuchen Sie es erneut",
+    "ChangedSuccessfully": "Erfolgreich geändert",
+    "Loading": "Laden",
+    "Language": "Sprache",
+    "AlreadyUsed": "Bereits verwendet"
+    
   
 }

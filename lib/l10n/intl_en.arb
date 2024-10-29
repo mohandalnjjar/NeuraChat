@@ -1,5 +1,12 @@
 {
 
-    "NeuraChat" : "Neura Chat"
+"NeuraChat" : "Neura Chat",
+"TyrAgain":"Tyr Again",
+"ChangedSuccessfully":"Changed Successfully",
+"Loading":"Loading",
+"Language":"Language",
+"AlreadyUsed":"Already Used"
+
+
   
 }

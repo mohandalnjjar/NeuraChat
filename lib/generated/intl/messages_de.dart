@@ -21,6 +21,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "AlreadyUsed" : MessageLookupByLibrary.simpleMessage("Bereits verwendet"),
+    "ChangedSuccessfully" : MessageLookupByLibrary.simpleMessage("Erfolgreich geändert"),
+    "Language" : MessageLookupByLibrary.simpleMessage("Sprache"),
+    "Loading" : MessageLookupByLibrary.simpleMessage("Laden"),
     "NeuraChat" : MessageLookupByLibrary.simpleMessage("Neura Chat")
   };
 }

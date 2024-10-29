@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neura_chat/core/constants/app_text_styles.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
 import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
@@ -36,26 +35,6 @@ class NeuraChat extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class MainView extends StatelessWidget {
-  const MainView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Text(
-            'Hi, Muhanad',
-            style: TextStyles.styleRegular20(context),
-          ),
-        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/app_routes.dart';
-import 'package:neura_chat/main.dart';
+import 'package:neura_chat/home.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(

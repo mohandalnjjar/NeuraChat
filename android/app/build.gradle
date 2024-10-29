@@ -10,6 +10,9 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+
+    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,6 +40,24 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+     flavorDimensions += "default"
+
+    productFlavors {
+
+        create("dev") {
+            dimension = "default"
+            resValue "string", "app_name", " Neura Dev"
+            applicationIdSuffix = ".dev"
+        }
+
+          create("prod") {
+            dimension = "default"
+            resValue "string", "app_name", " Neura Chat"
+        }
+    }
+
+    
 }
 
 flutter {

@@ -10,8 +10,8 @@ platform :android do
         firebase_cli_token: "1//03E9I9-2jjYzgCgYIARAAGAMSNwF-L9IrGGt1G52REqwzfBzyMR2MTDyfdnIhEH_w59hDWkKXDfKWX9rGYoMbbPW-8au5fXRgm8I",
         android_artifact_type: "APK",
         android_artifact_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
-        testers: "albanaquran@gmail.com",
-        release_notes: "First Firebase distribution",
+        testers: "albanaquran@gmail.com, mohanadalnjjar23@gmail.com",
+        release_notes: "second Firebase distribution",
 
     )
   end

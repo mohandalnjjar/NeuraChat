@@ -9,7 +9,7 @@ import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
   runApp(
     const NeuraChat(),
   );
@@ -23,8 +23,9 @@ class NeuraChat extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              ThemeCubit(ThemeRepoImpl())..getTheme(context: context),
+          create: (context) => ThemeCubit(
+            ThemeRepoImpl(),
+          )..getTheme(context: context),
         ),
         BlocProvider(
           create: (context) => LanguageCubit(

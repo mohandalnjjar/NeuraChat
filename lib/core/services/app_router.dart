@@ -5,10 +5,14 @@ import 'package:neura_chat/features/language/presentation/views/language_view.da
 abstract class AppRouter {
   static final router = GoRouter(
     routes: [
+      // GoRoute(
+      //   path: AppRoutes.kMainView,
+      //   builder: (context, state) => const LoginView(),
+      // ),
       GoRoute(
         path: AppRoutes.kMainView,
         builder: (context, state) => const LanguageView(),
-      )
+      ),
     ],
   );
 }

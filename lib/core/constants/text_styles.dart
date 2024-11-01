@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:neura_chat/core/utils/functions/responsive_font.dart';
@@ -29,6 +28,14 @@ abstract class TextStyles {
   static TextStyle styleRegular16(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w400,
+      fontSize: responsiveFontSize(fontSize: 16, context: context),
+    );
+  }
+
+  static TextStyle styleRegularGrey16(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      color: Colors.grey,
       fontSize: responsiveFontSize(fontSize: 16, context: context),
     );
   }

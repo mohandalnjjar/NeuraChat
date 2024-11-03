@@ -19,10 +19,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Ruby 2.7
+      - name: Set up Ruby 3.2.3
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: '2.7'    # Specify only the major.minor version
+          ruby-version: '3.2.3'    # Specify only the major.minor version
           bundler-cache: true
           working-directory: android
 

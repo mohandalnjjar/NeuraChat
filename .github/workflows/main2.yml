@@ -1,4 +1,4 @@
-name: Android Fastlane With Firebase App Distribution 
+name: Android Fastlane With Firebase App Distribution WorkFlow
 
 on:
   push:
@@ -19,10 +19,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Set up Ruby 2.7.6
+      - name: Set up Ruby 2.7
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: '2.7.6'    
+          ruby-version: '2.7'    # Specify only the major.minor version
           bundler-cache: true
           working-directory: android
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "719028830605",
+    "project_id": "neura-dev",
+    "storage_bucket": "neura-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719028830605:android:a290bf8413041df3703dc4",
+        "android_client_info": {
+          "package_name": "com.example.neura_chat.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB98OGOLpt5Agauuqh4EB1yFo1Q3y1IhMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

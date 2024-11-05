@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,7 +10,15 @@ import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-void main(List<String> args) {
+import 'package:neura_chat/firebase_options_dev.dart';
+
+void main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+    name: 'Neura Chat Dev',
+  );
   runApp(
     const NeuraChat(),
   );

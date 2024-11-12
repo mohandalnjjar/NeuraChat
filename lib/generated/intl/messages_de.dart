@@ -21,10 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "AlreadyUsed" : MessageLookupByLibrary.simpleMessage("Bereits verwendet"),
-    "ChangedSuccessfully" : MessageLookupByLibrary.simpleMessage("Erfolgreich geändert"),
-    "Language" : MessageLookupByLibrary.simpleMessage("Sprache"),
-    "Loading" : MessageLookupByLibrary.simpleMessage("Laden"),
-    "NeuraChat" : MessageLookupByLibrary.simpleMessage("Neura Chat")
+    "alreadyUsed" : MessageLookupByLibrary.simpleMessage("Bereits verwendet"),
+    "changedSuccessfully" : MessageLookupByLibrary.simpleMessage("Erfolgreich geändert"),
+    "checkYourEmail" : MessageLookupByLibrary.simpleMessage("Überprüfen Sie Ihre E-Mail"),
+    "enterYourEmail" : MessageLookupByLibrary.simpleMessage("Geben Sie Ihre E-Mail ein"),
+    "forgotPassword" : MessageLookupByLibrary.simpleMessage("Passwort vergessen"),
+    "language" : MessageLookupByLibrary.simpleMessage("Sprache"),
+    "loading" : MessageLookupByLibrary.simpleMessage("Wird geladen"),
+    "neuraChat" : MessageLookupByLibrary.simpleMessage("Neura Chat"),
+    "resetPassword" : MessageLookupByLibrary.simpleMessage("Passwort zurücksetzen"),
+    "tryAgain" : MessageLookupByLibrary.simpleMessage("Versuchen Sie es erneut"),
+    "weWillSendAResetLink" : MessageLookupByLibrary.simpleMessage("Wir senden Ihnen einen Link zum Zurücksetzen")
   };
 }

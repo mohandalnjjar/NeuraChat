@@ -21,11 +21,28 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "AlreadyUsed" : MessageLookupByLibrary.simpleMessage("Already Used"),
-    "ChangedSuccessfully" : MessageLookupByLibrary.simpleMessage("Changed Successfully"),
-    "Language" : MessageLookupByLibrary.simpleMessage("Language"),
-    "Loading" : MessageLookupByLibrary.simpleMessage("Loading"),
-    "NeuraChat" : MessageLookupByLibrary.simpleMessage("Neura Chat"),
-    "TyrAgain" : MessageLookupByLibrary.simpleMessage("Tyr Again")
+    "AskAnyQuestion" : MessageLookupByLibrary.simpleMessage("Ask any question"),
+    "Email" : MessageLookupByLibrary.simpleMessage("Email"),
+    "ForgotPassword" : MessageLookupByLibrary.simpleMessage("Forgot password?"),
+    "Neura" : MessageLookupByLibrary.simpleMessage("Neura"),
+    "NoInternetConnectionPleaseCheckYourNetworkSettings" : MessageLookupByLibrary.simpleMessage("No internet connection. Please check your network settings."),
+    "Password" : MessageLookupByLibrary.simpleMessage("password"),
+    "SingUp" : MessageLookupByLibrary.simpleMessage("Sing up"),
+    "Skip" : MessageLookupByLibrary.simpleMessage("Skip"),
+    "UserName" : MessageLookupByLibrary.simpleMessage("User name"),
+    "alreadyUsed" : MessageLookupByLibrary.simpleMessage("Already Used"),
+    "changedSuccessfully" : MessageLookupByLibrary.simpleMessage("Changed Successfully"),
+    "checkYourEmail" : MessageLookupByLibrary.simpleMessage("Check your email"),
+    "continueWithGoogle" : MessageLookupByLibrary.simpleMessage("Continue with google"),
+    "enterYourEmail" : MessageLookupByLibrary.simpleMessage("Enter your email"),
+    "forgotPassword" : MessageLookupByLibrary.simpleMessage("Forgot password"),
+    "language" : MessageLookupByLibrary.simpleMessage("Language"),
+    "loading" : MessageLookupByLibrary.simpleMessage("Loading"),
+    "login" : MessageLookupByLibrary.simpleMessage("Log In"),
+    "neuraChat" : MessageLookupByLibrary.simpleMessage("Neura Chat"),
+    "register" : MessageLookupByLibrary.simpleMessage("Register"),
+    "resetPassword" : MessageLookupByLibrary.simpleMessage("Reset password"),
+    "tryAgain" : MessageLookupByLibrary.simpleMessage("Try Again"),
+    "weWillSendAResetLink" : MessageLookupByLibrary.simpleMessage("We will send a reset link")
   };
 }

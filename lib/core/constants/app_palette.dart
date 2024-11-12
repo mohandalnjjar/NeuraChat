@@ -8,7 +8,15 @@ abstract class AppPalette {
   static const kLightScaffoldColor = Colors.white;
 
   // Primary color: Slightly vibrant for elements that need highlighting
-  static const kPrimaryColor = Color(0xff3A8DFF); // Electric Blue
+  static const kPrimaryColor = Color(0xff3B3ABE);
+
+  static const kSecondaryDarkColor = Color(0xff242424);
+
+  static const kWhiteModeButtom = Colors.green;
+  static const kDarkModeButtom = Colors.white;
+  
+  static const kwhitModeMessageColor = Color(0xffF5F5F5);
+  static const kwhitDarkMessageColor = Color(0xff2D2D2D);
 
   // Dark mode icon and navigation bar color
   static const kGnavColor =

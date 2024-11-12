@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swift_mart/core/utils/const/app_constance.dart';
+import 'package:neura_chat/core/constants/app_routes.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class LoginButtomNavBar extends StatelessWidget {
   const LoginButtomNavBar({
@@ -20,10 +21,10 @@ class LoginButtomNavBar extends StatelessWidget {
           TextButton(
             style: TextButton.styleFrom(padding: const EdgeInsets.all(0)),
             onPressed: () {
-              GoRouter.of(context).push(RouterPath.kRegisterView);
+              GoRouter.of(context).push(AppRoutes.kRegisterView);
             },
-            child: const Text(
-              'Register',
+            child: Text(
+              S.of(context).register,
             ),
           ),
         ],

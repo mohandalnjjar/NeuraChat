@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
-import 'package:neura_chat/core/utils/widgets/aler_pop_up.dart';
+import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
 import 'package:neura_chat/core/utils/widgets/my_button.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/generated/l10n.dart';
@@ -29,8 +29,8 @@ class LanguageViewSliverAppBar extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          S.of(context).Language,
-          style: TextStyles.styleSemiBold27(context),
+          S.of(context).language,
+          style: AppStyles.styleSemiBold27(context),
         ),
         actions: [
           CustomButton(
@@ -43,7 +43,7 @@ class LanguageViewSliverAppBar extends StatelessWidget {
                   selectedLanguage) {
                 alertPopUp(
                   context: context,
-                  message: S.of(context).AlreadyUsed,
+                  message: S.of(context).alreadyUsed,
                 );
               } else {
                 BlocProvider.of<LanguageCubit>(context).changeAppLanguage(

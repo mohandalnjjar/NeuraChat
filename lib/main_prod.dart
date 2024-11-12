@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
+import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/check_login_cubit/check_auth_status_cubit.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
@@ -14,11 +16,11 @@ import 'package:neura_chat/firebase_options.dart';
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  ///Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'Neura Chat',
   );
+
   runApp(
     const NeuraChat(),
   );
@@ -41,6 +43,11 @@ class NeuraChat extends StatelessWidget {
             languageRepoImpl: LanguageRepoImpl(),
           )..getAppLanguage(context: context),
         ),
+        BlocProvider(
+          create: (context) => CheckAuthStatusCubit(
+            authRepoImpl: AuthRepoImpl(),
+          ),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeCubitState>(
         builder: (context, state) {
@@ -61,7 +68,7 @@ class NeuraChat extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(
-                  isDark: BlocProvider.of<ThemeCubit>(context).themeMode,
+                  isDark: !!!BlocProvider.of<ThemeCubit>(context).themeMode,
                   context: context,
                 ),
               );

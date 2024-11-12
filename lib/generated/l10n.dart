@@ -48,60 +48,230 @@ class S {
   }
 
   /// `Neura Chat`
-  String get NeuraChat {
+  String get neuraChat {
     return Intl.message(
       'Neura Chat',
-      name: 'NeuraChat',
+      name: 'neuraChat',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tyr Again`
-  String get TyrAgain {
+  /// `Try Again`
+  String get tryAgain {
     return Intl.message(
-      'Tyr Again',
-      name: 'TyrAgain',
+      'Try Again',
+      name: 'tryAgain',
       desc: '',
       args: [],
     );
   }
 
   /// `Changed Successfully`
-  String get ChangedSuccessfully {
+  String get changedSuccessfully {
     return Intl.message(
       'Changed Successfully',
-      name: 'ChangedSuccessfully',
+      name: 'changedSuccessfully',
       desc: '',
       args: [],
     );
   }
 
   /// `Loading`
-  String get Loading {
+  String get loading {
     return Intl.message(
       'Loading',
-      name: 'Loading',
+      name: 'loading',
       desc: '',
       args: [],
     );
   }
 
   /// `Language`
-  String get Language {
+  String get language {
     return Intl.message(
       'Language',
-      name: 'Language',
+      name: 'language',
       desc: '',
       args: [],
     );
   }
 
   /// `Already Used`
-  String get AlreadyUsed {
+  String get alreadyUsed {
     return Intl.message(
       'Already Used',
-      name: 'AlreadyUsed',
+      name: 'alreadyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot password',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check your email`
+  String get checkYourEmail {
+    return Intl.message(
+      'Check your email',
+      name: 'checkYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email`
+  String get enterYourEmail {
+    return Intl.message(
+      'Enter your email',
+      name: 'enterYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We will send a reset link`
+  String get weWillSendAResetLink {
+    return Intl.message(
+      'We will send a reset link',
+      name: 'weWillSendAResetLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset password`
+  String get resetPassword {
+    return Intl.message(
+      'Reset password',
+      name: 'resetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue with google`
+  String get continueWithGoogle {
+    return Intl.message(
+      'Continue with google',
+      name: 'continueWithGoogle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log In`
+  String get login {
+    return Intl.message(
+      'Log In',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get ForgotPassword {
+    return Intl.message(
+      'Forgot password?',
+      name: 'ForgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `password`
+  String get Password {
+    return Intl.message(
+      'password',
+      name: 'Password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sing up`
+  String get SingUp {
+    return Intl.message(
+      'Sing up',
+      name: 'SingUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get Email {
+    return Intl.message(
+      'Email',
+      name: 'Email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User name`
+  String get UserName {
+    return Intl.message(
+      'User name',
+      name: 'UserName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Skip`
+  String get Skip {
+    return Intl.message(
+      'Skip',
+      name: 'Skip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection. Please check your network settings.`
+  String get NoInternetConnectionPleaseCheckYourNetworkSettings {
+    return Intl.message(
+      'No internet connection. Please check your network settings.',
+      name: 'NoInternetConnectionPleaseCheckYourNetworkSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neura`
+  String get Neura {
+    return Intl.message(
+      'Neura',
+      name: 'Neura',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ask any question`
+  String get AskAnyQuestion {
+    return Intl.message(
+      'Ask any question',
+      name: 'AskAnyQuestion',
       desc: '',
       args: [],
     );

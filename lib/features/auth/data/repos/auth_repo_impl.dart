@@ -1,29 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:swift_mart/core/errors/failures.dart';
-import 'package:swift_mart/core/functions/add_user_details_first_time.dart';
-import 'package:swift_mart/core/functions/add_user_details_to_firestore__second_time.dart';
-import 'package:swift_mart/core/utils/services/stripe_service.dart';
-import 'package:swift_mart/features/auth/data/repos/auth_repo.dart';
+import 'package:neura_chat/core/constants/app_keys.dart';
+import 'package:neura_chat/core/errors/app_failures_handler.dart';
+import 'package:neura_chat/core/utils/functions/check_internet_connectivity.dart';
+import 'package:neura_chat/features/auth/data/repos/auth_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-  final StripeService stripeService = StripeService();
   @override
-  Future<Either<Failure, void>> loginUserMethod(
-      {required String email, required String password}) async {
+  Future<Either<Failures, void>> loginUserMethod({
+    required String email,
+    required String password,
+  }) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      bool isConnected = await checkInternetConnection();
 
+      if (!isConnected) {
+        return left(
+          FirebaseAuthExcep(
+            errorMessage:
+                "No internet connection. Please check your network settings.",
+          ),
+        );
+      }
+
+      await auth.signInWithEmailAndPassword(email: email, password: password);
       return right(null);
     } catch (e) {
       if (e is FirebaseAuthException) {
         return left(
-          FirebaseAuthExcep.fromFireException(
-            errorCode: e.code,
-          ),
+          FirebaseAuthExcep.fromFireException(errorCode: e.code),
         );
       } else {
         return left(
@@ -36,20 +46,26 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failure, void>> singUpUserMethod({
+  Future<Either<Failures, void>> singUpUserMethod({
     required String email,
     required String password,
     required String name,
   }) async {
     try {
+      bool isConnected = await checkInternetConnection();
+      if (!isConnected) {
+        return left(
+          FirebaseAuthExcep(
+            errorMessage:
+                "No internet connection. Please check your network settings.",
+          ),
+        );
+      }
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
       await addUserDetailsFistTime(name: name, email: email);
-
-      await stripeService.creatCustomertId();
 
       return right(null);
     } catch (e) {
@@ -70,7 +86,7 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failure, void>> resetPasswordMethod(
+  Future<Either<Failures, void>> resetPasswordMethod(
       {required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
@@ -93,8 +109,19 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failure, void>> googleLogin() async {
+  Future<Either<Failures, void>> googleLogin() async {
     try {
+      //Check internet connectivity befre starting
+      bool isConnected = await checkInternetConnection();
+      if (!isConnected) {
+        return left(
+          FirebaseAuthExcep(
+            errorMessage:
+                "No internet connection. Please check your network settings.",
+          ),
+        );
+      }
+
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
       if (gUser == null) {
         return left(
@@ -103,24 +130,19 @@ class AuthRepoImpl extends AuthRepo {
           ),
         );
       }
+
       final GoogleSignInAuthentication gAuth = await gUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken,
       );
-
       final userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
       final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
       if (isNewUser) {
         await addUserDetailsFistTime(
             name: gUser.email.replaceAll('@gmail.com', ''), email: gUser.email);
-        await stripeService.creatCustomertId();
-      } else {
-        await addUserDetailsWithGoogle(
-            name: gUser.email.replaceAll('@gmail.com', ''), email: gUser.email);
       }
-
       return right(null);
     } catch (e) {
       if (e is FirebaseAuthException) {
@@ -137,5 +159,39 @@ class AuthRepoImpl extends AuthRepo {
         );
       }
     }
+  }
+
+  @override
+  Future<void> addUserDetailsFistTime({
+    required String name,
+    required String email,
+  }) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+    User? user = auth.currentUser;
+    final uid = user!.uid;
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).set(
+      {
+        'userId': uid,
+        'name': name,
+        'profileImage': '',
+        'createdAt': Timestamp.now(),
+      },
+    );
+  }
+
+  @override
+  Future<void> setAuthStatues() async {
+    final preferences = await SharedPreferences.getInstance();
+
+    await preferences.setBool(AppKeys.kIsSeenKey, true);
+  }
+
+  @override
+  Future<bool> getAuthStatus() async {
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getBool(AppKeys.kIsSeenKey) ?? false;
+    
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neura_chat/core/utils/widgets/aler_pop_up.dart';
+import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
 import 'package:neura_chat/core/utils/widgets/laoding_indicator.dart';
 import 'package:neura_chat/features/language/data/model/language_category_model.dart';
 import 'package:neura_chat/features/language/data/model/language_data_model.dart';
@@ -45,11 +45,11 @@ class _LanguageViewBodyState extends State<LanguageViewBody> {
         } else if (state is LanguageChangeDone) {
           context.pop();
           alertPopUp(
-              context: context, message: S.of(context).ChangedSuccessfully);
+              context: context, message: S.of(context).changedSuccessfully);
         } else {
           alertPopUp(
             context: context,
-            message: S.of(context).TyrAgain,
+            message: S.of(context).tryAgain,
           );
         }
       },

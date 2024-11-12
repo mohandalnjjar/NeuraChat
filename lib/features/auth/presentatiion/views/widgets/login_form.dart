@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconly/iconly.dart';
-import 'package:swift_mart/core/functions/show_meeage.dart';
-import 'package:swift_mart/core/functions/validators/validators.dart';
-import 'package:swift_mart/core/utils/const/app_constance.dart';
-import 'package:swift_mart/core/utils/services/app_text_styles.dart';
-import 'package:swift_mart/core/utils/widgets/custom_loading_indicator.dart';
-import 'package:swift_mart/core/utils/widgets/custom_text_form_field.dart';
-import 'package:swift_mart/features/auth/presentatiion/managers/google_login_cubit/google_login_cubit.dart';
-import 'package:swift_mart/features/auth/presentatiion/managers/login_cubit/login_cubit.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/login_with_social_media_widget.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/or_widget.dart';
+import 'package:neura_chat/core/constants/app_routes.dart';
+import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/core/utils/functions/validators.dart';
+import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
+import 'package:neura_chat/core/utils/widgets/laoding_indicator.dart';
+import 'package:neura_chat/core/utils/widgets/my_text_form_field.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/google_login_cubit/google_login_cubit.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/login_cubit/login_cubit.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/continue_with_google_buttom.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/or_widget.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -34,21 +35,21 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         showDialog(
           context: context,
-          builder: (context) => CustomLoadingIndicator(
+          builder: (context) => LoadingIndicator(
             inAsyncCall: state is GoogleLoginLoading ? true : false,
           ),
         );
         if (state is GoogleLoginFailed) {
           context.pop();
 
-          showedScaffoldMessage(context: context, message: state.errorMessage);
+          alertPopUp(context: context, message: state.errorMessage);
           context.pop();
         } else if (state is GoogleLoginDone) {
           context.pop();
 
-          GoRouter.of(context).pushReplacement(RouterPath.kHomeViewRouter);
+          GoRouter.of(context).pushReplacement(AppRoutes.kChatView);
 
-          showedScaffoldMessage(context: context, message: 'Done');
+          alertPopUp(context: context, message: 'Done');
           context.pop();
         }
       },
@@ -75,29 +76,27 @@ class _LoginFormState extends State<LoginForm> {
                 const SizedBox(
                   height: 25,
                 ),
-                CustomTextFromField(
+                MyTextFormField(
                   onSaved: (value) {
                     email = value;
                   },
-                  hint: 'Email',
+                  hint: S.of(context).Email,
                   validator: (value) {
                     return Validators.emailValidator(value);
                   },
-                  prefixIcon: const Icon(IconlyLight.message),
+                  prefixIcon: const Icon(FeatherIcons.mail),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                CustomTextFromField(
+                MyTextFormField(
                   onSaved: (value) {
                     password = value;
                   },
                   obscureText: obscureText,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      obscureText
-                          ? IconlyLight.shield_done
-                          : IconlyLight.shield_fail,
+                      obscureText ? FeatherIcons.eye : FeatherIcons.eyeOff,
                     ),
                     onPressed: () {
                       setState(() {
@@ -105,8 +104,8 @@ class _LoginFormState extends State<LoginForm> {
                       });
                     },
                   ),
-                  hint: 'Password',
-                  prefixIcon: const Icon(IconlyLight.password),
+                  hint: S.of(context).Password,
+                  prefixIcon: const Icon(FeatherIcons.lock),
                   validator: (value) {
                     return Validators.passwordValidator(value);
                   },
@@ -116,10 +115,10 @@ class _LoginFormState extends State<LoginForm> {
                   child: TextButton(
                     onPressed: () async {
                       await GoRouter.of(context)
-                          .push(RouterPath.kForgotPasswordView);
+                          .push(AppRoutes.kForgetPasswordView);
                     },
                     child: Text(
-                      'Forgot Password?',
+                      S.of(context).ForgotPassword,
                       style: AppStyles.styleRegular15(context)
                           .copyWith(color: Colors.grey),
                     ),
@@ -141,34 +140,14 @@ class _LoginFormState extends State<LoginForm> {
                     }
                   },
                   child: Text(
-                    'Login',
-                    style: AppStyles.styleRegular18(context),
+                    S.of(context).login,
+                    style: AppStyles.styleBold17(context).copyWith(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const OrWidget(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LoginSocialMeadiWidget(
-                      image: 'assets/images/google_icons.png',
-                      onTap: () async {
-                        await BlocProvider.of<GoogleLoginCubit>(context)
-                            .googleAuthMethod();
-                      },
-                    ),
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    LoginSocialMeadiWidget(
-                      image: 'assets/images/facebook.png',
-                      onTap: () async {
-                        const CustomLoadingIndicator(
-                          inAsyncCall: true,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                const ContinueWithGoogleButtom(),
               ],
             ),
           ),

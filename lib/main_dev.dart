@@ -60,7 +60,7 @@ class NeuraChat extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(
-                  isDark: BlocProvider.of<ThemeCubit>(context).themeMode,
+                  isDark: !BlocProvider.of<ThemeCubit>(context).themeMode,
                   context: context,
                 ),
               );
@@ -71,3 +71,4 @@ class NeuraChat extends StatelessWidget {
     );
   }
 }
+

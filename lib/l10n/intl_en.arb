@@ -1,12 +1,25 @@
 {
-
-"NeuraChat" : "Neura Chat",
-"TyrAgain":"Tyr Again",
-"ChangedSuccessfully":"Changed Successfully",
-"Loading":"Loading",
-"Language":"Language",
-"AlreadyUsed":"Already Used"
-
-
-  
+  "neuraChat": "Neura Chat",
+  "tryAgain": "Try Again",
+  "changedSuccessfully": "Changed Successfully",
+  "loading": "Loading",
+  "language": "Language",
+  "alreadyUsed": "Already Used",
+  "forgotPassword": "Forgot password",
+  "checkYourEmail": "Check your email",
+  "enterYourEmail": "Enter your email",
+  "weWillSendAResetLink": "We will send a reset link",
+  "resetPassword": "Reset password",
+  "register":"Register",
+  "continueWithGoogle":"Continue with google",
+  "login":"Log In",
+  "ForgotPassword":"Forgot password?",
+  "Password":"password",
+  "SingUp":"Sing up",
+  "Email":"Email",
+  "UserName":"User name",
+  "Skip":"Skip",
+  "NoInternetConnectionPleaseCheckYourNetworkSettings":"No internet connection. Please check your network settings.",
+  "Neura":"Neura",
+  "AskAnyQuestion":"Ask any question"
 }

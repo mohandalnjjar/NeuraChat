@@ -1,11 +1,13 @@
 {
-
-    "NeuraChat" : "Neura Chat",
-    "TryAgain": "Versuchen Sie es erneut",
-    "ChangedSuccessfully": "Erfolgreich geändert",
-    "Loading": "Laden",
-    "Language": "Sprache",
-    "AlreadyUsed": "Bereits verwendet"
-    
-  
+  "neuraChat": "Neura Chat",
+  "tryAgain": "Versuchen Sie es erneut",
+  "changedSuccessfully": "Erfolgreich geändert",
+  "loading": "Wird geladen",
+  "language": "Sprache",
+  "alreadyUsed": "Bereits verwendet",
+  "forgotPassword": "Passwort vergessen",
+  "checkYourEmail": "Überprüfen Sie Ihre E-Mail",
+  "enterYourEmail": "Geben Sie Ihre E-Mail ein",
+  "weWillSendAResetLink": "Wir senden Ihnen einen Link zum Zurücksetzen",
+  "resetPassword": "Passwort zurücksetzen"
 }

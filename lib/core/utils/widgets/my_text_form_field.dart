@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
 
 class MyTextFormField extends StatelessWidget {
@@ -18,6 +19,7 @@ class MyTextFormField extends StatelessWidget {
     this.hintStyle,
     this.maxLines = 1,
     this.initialValue,
+    this.contentPadding = AppPadding.gTextFromFiledContentPadding,
   });
   final int maxLines;
   final String hint;
@@ -33,6 +35,7 @@ class MyTextFormField extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;
   final FocusNode? focusNode;
   final bool obscureText;
+  final EdgeInsetsGeometry? contentPadding;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -48,7 +51,7 @@ class MyTextFormField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         filled: true,
-        contentPadding: const EdgeInsets.all(17),
+        contentPadding: contentPadding,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         hintText: hint,
@@ -59,7 +62,7 @@ class MyTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: AppPalette.kPrimaryColor,
+            color: AppPalette.kWhiteModeButtom,
           ),
           borderRadius: BorderRadius.circular(27),
         ),

@@ -22,10 +22,14 @@ class FirebaseAuthExcep extends Failures {
           errorMessage: 'The password provided is too weak.');
     } else if (errorCode == 'invalid-credential') {
       return FirebaseAuthExcep(
-          errorMessage: 'may be your email or password wrong');
+          errorMessage: 'Maybe your email or password is incorrect.');
     } else if (errorCode == 'email-already-in-use') {
       return FirebaseAuthExcep(
           errorMessage: 'The account already exists for that email.');
+    } else if (errorCode == 'network-request-failed') {
+      return FirebaseAuthExcep(
+          errorMessage:
+              'No internet connection. Please check your network settings.');
     } else {
       return FirebaseAuthExcep(errorMessage: errorCode);
     }

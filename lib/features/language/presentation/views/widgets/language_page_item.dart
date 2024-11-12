@@ -18,7 +18,7 @@ class LanguagePageItem extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: AppPalette.kWhitePrimaryColor,
+        color: AppPalette.kLightScaffoldColor,
         border: isActive
             ? Border.all(
                 color: AppPalette.kPrimaryColor,
@@ -40,14 +40,14 @@ class LanguagePageItem extends StatelessWidget {
           ),
           Text(
             categoryItmeModel.title,
-            style: TextStyles.styleRegular18(context),
+            style: AppStyles.styleRegular18(context),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           const Spacer(),
           Text(
             '(${categoryItmeModel.langOriginalName})',
-            style: TextStyles.styleRegular15(context),
+            style: AppStyles.styleRegular15(context),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

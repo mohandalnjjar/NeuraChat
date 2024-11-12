@@ -13,7 +13,7 @@ class ThemeCubit extends Cubit<ThemeCubitState> {
   bool themeMode = false;
   bool get getThemeMode => themeMode;
 
-  Future<void> appTheme({required bool themeValue}) async {
+  Future<void> changAppTheme({required bool themeValue}) async {
     await themeRepoImpl.setTheme(themeValue: themeValue);
     themeMode = themeValue;
 

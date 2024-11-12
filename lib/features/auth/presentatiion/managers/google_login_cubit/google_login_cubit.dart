@@ -12,6 +12,7 @@ class GoogleLoginCubit extends Cubit<GoogleLoginState> {
     emit(
       GoogleLoginLoading(),
     );
+    
     var result = await authRepoImpl.googleLogin();
 
     result.fold(

@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:neura_chat/core/utils/functions/responsive_font.dart';
 
-abstract class TextStyles {
+abstract class AppStyles {
   // Regular styles
   static TextStyle styleRegular12(BuildContext context) {
     return TextStyle(
@@ -54,6 +53,14 @@ abstract class TextStyles {
     );
   }
 
+  static TextStyle styleGreyReg16(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w400,
+      color: Colors.grey,
+      fontSize: responsiveFontSize(fontSize: 16, context: context),
+    );
+  }
+
   // Bold styles
   static TextStyle styleBold14(BuildContext context) {
     return TextStyle(
@@ -76,6 +83,13 @@ abstract class TextStyles {
     );
   }
 
+  static TextStyle styleBold17(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 17, context: context),
+    );
+  }
+
   static TextStyle styleBold20(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w700,
@@ -89,6 +103,11 @@ abstract class TextStyles {
     return TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: responsiveFontSize(fontSize: 27, context: context),
+    );
+  } static TextStyle styleSemiBold23(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: responsiveFontSize(fontSize: 23, context: context),
     );
   }
 

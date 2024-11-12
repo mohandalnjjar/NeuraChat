@@ -13,9 +13,9 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
     iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppPalette.kPrimaryColor,
+        backgroundColor:
+            isDark ? AppPalette.kDarkModeButtom : AppPalette.kWhiteModeButtom,
         elevation: 0,
-        foregroundColor: Colors.white,
         padding: const EdgeInsets.all(
           13,
         ),
@@ -25,16 +25,18 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: AppPalette.kWhitePrimaryColor,
+      fillColor: isDark
+          ? AppPalette.kwhitDarkMessageColor
+          : AppPalette.kwhitModeMessageColor,
     ),
     scaffoldBackgroundColor:
         isDark ? AppPalette.kDarkScaffoldColor : AppPalette.kLightScaffoldColor,
     brightness: isDark ? Brightness.dark : Brightness.light,
     textTheme: isDark
-        ? GoogleFonts.robotoTextTheme(
+        ? GoogleFonts.poppinsTextTheme(
             ThemeData.dark().textTheme,
           )
-        : GoogleFonts.robotoTextTheme(),
+        : GoogleFonts.poppinsTextTheme(),
     bottomSheetTheme: BottomSheetThemeData(
       backgroundColor: isDark
           ? AppPalette.kDarkScaffoldColor

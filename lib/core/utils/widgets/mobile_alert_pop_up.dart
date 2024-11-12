@@ -21,8 +21,8 @@ class MobileAlertPopUp extends StatelessWidget {
         child: Center(
           child: Text(
             message,
-            style: TextStyles.styleRegular15(context)
-                .copyWith(color: Colors.white),
+            style:
+                AppStyles.styleRegular15(context).copyWith(color: Colors.white),
           ),
         ),
       ),

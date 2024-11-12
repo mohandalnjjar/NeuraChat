@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/mobile_forgot_password_layout.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/mobile_forgot_password_layout.dart';
 
 class DesktopForgotPasswordViewLayout extends StatelessWidget {
   const DesktopForgotPasswordViewLayout({super.key});

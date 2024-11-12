@@ -1,10 +1,13 @@
 {
-
-    "NeuraChat" : "نيورا شات",
-    "TryAgain": "حاول مرة أخرى",
-    "ChangedSuccessfully": "تم التغيير بنجاح",
-    "Loading": "جار التحميل",
-    "Language": "اللغة",
-    "AlreadyUsed": "مستخدم بالفعل"
-  
+  "neuraChat": "نورا شات",
+  "tryAgain": "حاول مرة أخرى",
+  "changedSuccessfully": "تم التغيير بنجاح",
+  "loading": "جاري التحميل",
+  "language": "اللغة",
+  "alreadyUsed": "مستخدم بالفعل",
+  "forgotPassword": "نسيت كلمة المرور",
+  "checkYourEmail": "تحقق من بريدك الإلكتروني",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "weWillSendAResetLink": "سوف نرسل رابط لإعادة التعيين",
+  "resetPassword": "إعادة تعيين كلمة المرور"
 }

@@ -23,7 +23,7 @@ class DesktopAlertPopUp extends StatelessWidget {
             child: Center(
               child: Text(
                 message,
-                style: TextStyles.styleRegular15(context)
+                style: AppStyles.styleRegular15(context)
                     .copyWith(color: Colors.white),
               ),
             ),

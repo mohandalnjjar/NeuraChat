@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/mobile_register_view_Layotu.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/mobile_register_view_Layotu.dart';
 
 class DesktopRegisterViewLayotu extends StatelessWidget {
   const DesktopRegisterViewLayotu({super.key});

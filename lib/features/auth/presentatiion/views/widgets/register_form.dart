@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconly/iconly.dart';
-import 'package:swift_mart/core/functions/show_meeage.dart';
-import 'package:swift_mart/core/functions/validators/validators.dart';
-import 'package:swift_mart/core/utils/const/app_constance.dart';
-import 'package:swift_mart/core/utils/services/app_text_styles.dart';
-import 'package:swift_mart/core/utils/widgets/custom_loading_indicator.dart';
-import 'package:swift_mart/core/utils/widgets/custom_text_form_field.dart';
-import 'package:swift_mart/features/auth/presentatiion/managers/google_login_cubit/google_login_cubit.dart';
-import 'package:swift_mart/features/auth/presentatiion/managers/signup_cubit/sign_up_cubit.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/login_with_social_media_widget.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/or_widget.dart';
+import 'package:neura_chat/core/constants/app_routes.dart';
+import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/core/utils/functions/validators.dart';
+import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
+import 'package:neura_chat/core/utils/widgets/laoding_indicator.dart';
+import 'package:neura_chat/core/utils/widgets/my_text_form_field.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/google_login_cubit/google_login_cubit.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/signup_cubit/sign_up_cubit.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/continue_with_google_buttom.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/or_widget.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({
@@ -45,16 +46,16 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         showDialog(
           context: context,
-          builder: (context) => CustomLoadingIndicator(
+          builder: (context) => LoadingIndicator(
             inAsyncCall: state is GoogleLoginLoading ? true : false,
           ),
         );
         if (state is GoogleLoginFailed) {
-          showedScaffoldMessage(context: context, message: state.errorMessage);
+          alertPopUp(context: context, message: state.errorMessage);
         } else {
-          GoRouter.of(context).push(RouterPath.kHomeViewRouter);
+          GoRouter.of(context).push(AppRoutes.kChatView);
 
-          showedScaffoldMessage(context: context, message: 'Done');
+          alertPopUp(context: context, message: 'Done');
         }
       },
       builder: (context, state) {
@@ -78,18 +79,18 @@ class _RegisterFormState extends State<RegisterForm> {
               const SizedBox(
                 height: 25,
               ),
-              CustomTextFromField(
+              MyTextFormField(
                 controller: _nameControler,
-                hint: 'UserName',
+                hint: S.of(context).UserName,
                 validator: (value) {
                   return Validators.nameValidator(value);
                 },
-                prefixIcon: const Icon(IconlyLight.user),
+                prefixIcon: const Icon(FeatherIcons.user),
               ),
               const SizedBox(
                 height: 20,
               ),
-              CustomTextFromField(
+              MyTextFormField(
                 onSaved: (value) {
                   email = value;
                 },
@@ -97,22 +98,20 @@ class _RegisterFormState extends State<RegisterForm> {
                 validator: (value) {
                   return Validators.emailValidator(value);
                 },
-                hint: 'Email',
-                prefixIcon: const Icon(IconlyLight.message),
+                hint: S.of(context).Email,
+                prefixIcon: const Icon(FeatherIcons.mail),
               ),
               const SizedBox(
                 height: 20,
               ),
-              CustomTextFromField(
+              MyTextFormField(
                 onSaved: (value) {
                   password = value;
                 },
                 obscureText: obscureText,
                 suffixIcon: IconButton(
                   icon: Icon(
-                    obscureText
-                        ? IconlyLight.shield_done
-                        : IconlyLight.shield_fail,
+                    obscureText ? FeatherIcons.eye : FeatherIcons.eyeOff,
                   ),
                   onPressed: () {
                     setState(() {
@@ -120,11 +119,11 @@ class _RegisterFormState extends State<RegisterForm> {
                     });
                   },
                 ),
-                hint: 'Password',
+                hint: S.of(context).Password,
                 validator: (value) {
                   return Validators.passwordValidator(value);
                 },
-                prefixIcon: const Icon(IconlyLight.password),
+                prefixIcon: const Icon(FeatherIcons.lock),
               ),
               const SizedBox(
                 height: 20,
@@ -146,30 +145,14 @@ class _RegisterFormState extends State<RegisterForm> {
                   }
                 },
                 child: Text(
-                  'Sing Up',
-                  style: AppStyles.styleRegular18(context),
+                  S.of(context).SingUp,
+                  style: AppStyles.styleBold17(context).copyWith(
+                    color: Colors.black,
+                  ),
                 ),
               ),
               const OrWidget(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LoginSocialMeadiWidget(
-                    image: 'assets/images/google_icons.png',
-                    onTap: () async {
-                      await BlocProvider.of<GoogleLoginCubit>(context)
-                          .googleAuthMethod();
-                    },
-                  ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                  LoginSocialMeadiWidget(
-                    image: 'assets/images/facebook.png',
-                    onTap: () async {},
-                  ),
-                ],
-              ),
+              const ContinueWithGoogleButtom(),
             ],
           ),
         );

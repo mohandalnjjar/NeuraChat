@@ -21,10 +21,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "AlreadyUsed" : MessageLookupByLibrary.simpleMessage("مستخدم بالفعل"),
-    "ChangedSuccessfully" : MessageLookupByLibrary.simpleMessage("تم التغيير بنجاح"),
-    "Language" : MessageLookupByLibrary.simpleMessage("اللغة"),
-    "Loading" : MessageLookupByLibrary.simpleMessage("جار التحميل"),
-    "NeuraChat" : MessageLookupByLibrary.simpleMessage("نيورا شات")
+    "alreadyUsed" : MessageLookupByLibrary.simpleMessage("مستخدم بالفعل"),
+    "changedSuccessfully" : MessageLookupByLibrary.simpleMessage("تم التغيير بنجاح"),
+    "checkYourEmail" : MessageLookupByLibrary.simpleMessage("تحقق من بريدك الإلكتروني"),
+    "enterYourEmail" : MessageLookupByLibrary.simpleMessage("أدخل بريدك الإلكتروني"),
+    "forgotPassword" : MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور"),
+    "language" : MessageLookupByLibrary.simpleMessage("اللغة"),
+    "loading" : MessageLookupByLibrary.simpleMessage("جاري التحميل"),
+    "neuraChat" : MessageLookupByLibrary.simpleMessage("نورا شات"),
+    "resetPassword" : MessageLookupByLibrary.simpleMessage("إعادة تعيين كلمة المرور"),
+    "tryAgain" : MessageLookupByLibrary.simpleMessage("حاول مرة أخرى"),
+    "weWillSendAResetLink" : MessageLookupByLibrary.simpleMessage("سوف نرسل رابط لإعادة التعيين")
   };
 }

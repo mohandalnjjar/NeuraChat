@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:swift_mart/core/functions/validators/validators.dart';
-import 'package:swift_mart/core/utils/services/app_text_styles.dart';
-import 'package:swift_mart/core/utils/widgets/custom_text_form_field.dart';
-import 'package:swift_mart/features/auth/presentatiion/managers/reset_password_cubit/rest_password_cubit.dart';
-import 'package:swift_mart/generated/l10n.dart';
+import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/core/utils/functions/validators.dart';
+import 'package:neura_chat/core/utils/widgets/my_text_form_field.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/reset_password_cubit/rest_password_cubit.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class ForGotPasswordFrom extends StatefulWidget {
   const ForGotPasswordFrom({
@@ -30,21 +30,21 @@ class _ForGotPasswordFromState extends State<ForGotPasswordFrom> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            S.of(context).EnterYourEmail,
+            S.of(context).enterYourEmail,
             style: AppStyles.styleSemiBold27(context),
           ),
           Text(
-            S.of(context).WeWillSendAResetLink,
+            S.of(context).neuraChat,
             style: AppStyles.styleSemiBold27(context),
           ),
           const SizedBox(
             height: 16,
           ),
-          CustomTextFromField(
+          MyTextFormField(
             onSaved: (value) {
               email = value;
             },
-            hint: S.of(context).Email,
+            hint: S.of(context).enterYourEmail,
             validator: (value) {
               return Validators.emailValidator(value);
             },
@@ -66,8 +66,9 @@ class _ForGotPasswordFromState extends State<ForGotPasswordFrom> {
               }
             },
             child: Text(
-              S.of(context).ResetPassword,
-              style: AppStyles.styleRegular18(context),
+              S.of(context).resetPassword,
+              style:
+                  AppStyles.styleBold17(context).copyWith(color: Colors.black),
             ),
           ),
         ],

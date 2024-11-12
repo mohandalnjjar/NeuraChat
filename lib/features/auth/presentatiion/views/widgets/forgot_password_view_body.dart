@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swift_mart/core/utils/services/adaptive_layout.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/desktop_forgot+Password_layout.dart';
-import 'package:swift_mart/features/auth/presentatiion/views/widgets/mobile_forgot_password_layout.dart';
+import 'package:neura_chat/core/utils/widgets/adaptive_layout.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/desktop_forgot+Password_layout.dart';
+import 'package:neura_chat/features/auth/presentatiion/views/widgets/mobile_forgot_password_layout.dart';
 
 class ForgotPasswordViewBody extends StatelessWidget {
   const ForgotPasswordViewBody({

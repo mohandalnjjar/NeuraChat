@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class Failures {
   final String errorMessage;
 
@@ -38,6 +40,49 @@ class FirebaseAuthExcep extends Failures {
 
 class ServerFailure extends Failures {
   ServerFailure({required super.errorMessage});
+
+  factory ServerFailure.fromDioError({required DioException dioException}) {
+    switch (dioException.type) {
+      case DioExceptionType.connectionTimeout:
+        return ServerFailure(errorMessage: 'Check internet connectivity');
+      case DioExceptionType.sendTimeout:
+        return ServerFailure(errorMessage: 'Check internet connectivity');
+      case DioExceptionType.receiveTimeout:
+        return ServerFailure(errorMessage: 'Check internet connectivity');
+      case DioExceptionType.badCertificate:
+        return ServerFailure(errorMessage: 'Api key not valid');
+      case DioExceptionType.cancel:
+        return ServerFailure(errorMessage: 'Request was cancel');
+      case DioExceptionType.connectionError:
+        return ServerFailure(errorMessage: 'Check internet connectivity');
+      case DioExceptionType.unknown:
+        return ServerFailure(errorMessage: 'Try again, later');
+
+      case DioExceptionType.badResponse:
+        return ServerFailure.fromBadResponse(
+          statusCode: dioException.response!.statusCode!,
+          response: dioException.response!.data,
+        );
+      default:
+        return ServerFailure(errorMessage: 'Try again, later');
+    }
+  }
+
+  factory ServerFailure.fromBadResponse({
+    required int statusCode,
+    required dynamic response,
+  }) {
+    if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
+      return ServerFailure(errorMessage: response['error']['message']);
+    } else if (statusCode == 404) {
+      return ServerFailure(
+          errorMessage: 'your reqrust not found, please try again');
+    } else if (statusCode == 503) {
+      return ServerFailure(errorMessage: response['error']['message']);
+    } else {
+      return ServerFailure(errorMessage: 'Some thing went wrong try again');
+    }
+  }
 }
 
 class ImageError extends Failures {

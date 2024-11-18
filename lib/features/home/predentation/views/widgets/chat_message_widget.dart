@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:neura_chat/core/constants/app_padding.dart';
-import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/predentation/views/widgets/ai_chat_message_widget.dart';
+import 'package:neura_chat/features/home/predentation/views/widgets/user_message_widget.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   const ChatMessageWidget({
     super.key,
+    required this.message,
   });
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: AppPadding.globalPadding,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Flexible(
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Hi there! How can I help you today? This is a long message to check how the text wraps correctly when the width is limited.",
-                style: AppStyles.styleRegular16(context),
-              ),
-            ),
-          ),
-          const SizedBox(width: 5),
-          const Icon(FeatherIcons.messageCircle),
-        ],
-      ),
-    );
+    return message.isUser
+        ? UserMessageWidget(
+            message: message,
+          )
+        : AiChatMessageWidget(message: message);
   }
 }

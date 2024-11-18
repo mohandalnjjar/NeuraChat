@@ -75,11 +75,24 @@ abstract class AppStyles {
       fontSize: responsiveFontSize(fontSize: 16, context: context),
     );
   }
+  static TextStyle styleBold22(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 22, context: context),
+    );
+  }
 
   static TextStyle styleBold18(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: responsiveFontSize(fontSize: 18, context: context),
+    );
+  }
+
+  static TextStyle styleBold28(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 28, context: context),
     );
   }
 
@@ -97,6 +110,13 @@ abstract class AppStyles {
     );
   }
 
+  static TextStyle styleBold32(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: responsiveFontSize(fontSize: 32, context: context),
+    );
+  }
+
   // Semi-bold weight
 
   static TextStyle styleSemiBold27(BuildContext context) {
@@ -104,7 +124,9 @@ abstract class AppStyles {
       fontWeight: FontWeight.w600,
       fontSize: responsiveFontSize(fontSize: 27, context: context),
     );
-  } static TextStyle styleSemiBold23(BuildContext context) {
+  }
+
+  static TextStyle styleSemiBold23(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: responsiveFontSize(fontSize: 23, context: context),

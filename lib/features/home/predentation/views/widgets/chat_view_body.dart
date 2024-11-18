@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:neura_chat/features/home/predentation/views/widgets/chat_message_widget.dart';
-import 'package:neura_chat/features/home/predentation/views/widgets/custom_sliver_app_bar.dart';
-import 'package:neura_chat/features/home/predentation/views/widgets/user_message_widget.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:neura_chat/features/home/predentation/views/widgets/messages_list_widget.dart';
+import 'package:neura_chat/features/home/predentation/views/widgets/send_message_widget.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class ChatViewBody extends StatelessWidget {
   const ChatViewBody({
@@ -10,14 +11,18 @@ class ChatViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [
-        CustomSliverAppBar(),
-        SliverToBoxAdapter(
-          child: UserMessageWidget(),
-        ),
-        SliverToBoxAdapter(
-          child: ChatMessageWidget(),
+    return Column(
+      children: [
+        const MessagesListWidget(),
+        SendMessageWidget(
+          hintText: S.of(context).AskAnyQuestion,
+          uploadAssetsButtom: GestureDetector(
+            onTap: () {},
+            child: const Icon(
+              FeatherIcons.plus,
+              size: 27,
+            ),
+          ),
         ),
       ],
     );

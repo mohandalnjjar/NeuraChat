@@ -3,13 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 
 class UserMessageWidget extends StatelessWidget {
   const UserMessageWidget({
     super.key,
+    required this.message,
   });
-
+  final Message message;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +30,7 @@ class UserMessageWidget extends StatelessWidget {
                       : AppPalette.kwhitDarkMessageColor,
                 ),
                 child: Text(
-                  "Hi",
+                  message.content,
                   style: AppStyles.styleRegular16(context),
                 ),
               ),

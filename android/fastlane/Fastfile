@@ -11,7 +11,7 @@ platform :android do
         android_artifact_type: "APK",
         android_artifact_path: "../build/app/outputs/flutter-apk/app-prod-release.apk",
         testers: "albanaquran@gmail.com, mohanadalnjjar23@gmail.com",
-        release_notes: "second Firebase distribution",
+        release_notes: "APP after some refactoring",
 
     )
   end

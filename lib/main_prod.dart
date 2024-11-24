@@ -64,7 +64,7 @@ class NeuraChat extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: S.delegate.supportedLocales,
-                title: 'Neura Chat',
+                title: 'Neura',
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(

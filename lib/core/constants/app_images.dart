@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAppIcon
+  /// assets/images/app_icon.png
+  static const String imagesAppIcon = "assets/images/app_icon.png";
+
   /// Assets for imagesE8xqTwM18V
   /// assets/images/E8xqTwM18V.json
   static const String imagesE8xqTwM18V = "assets/images/E8xqTwM18V.json";
@@ -17,6 +21,10 @@ class Assets {
   /// Assets for imagesLotti
   /// assets/images/lotti.json
   static const String imagesLotti = "assets/images/lotti.json";
+
+  /// Assets for imagesLottieYaHabibi
+  /// assets/images/lottie_ya_habibi.json
+  static const String imagesLottieYaHabibi = "assets/images/lottie_ya_habibi.json";
 
   /// Assets for imagesSaudiFlag
   /// assets/images/saudi_flag.png

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:lottie/lottie.dart';
+import 'package:neura_chat/core/constants/app_images.dart';
 import 'package:neura_chat/features/home/predentation/views/widgets/messages_list_widget.dart';
 import 'package:neura_chat/features/home/predentation/views/widgets/send_message_widget.dart';
 import 'package:neura_chat/generated/l10n.dart';
@@ -12,7 +14,9 @@ class ChatViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+       
         const MessagesListWidget(),
         SendMessageWidget(
           hintText: S.of(context).AskAnyQuestion,

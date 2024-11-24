@@ -16,8 +16,9 @@ class GetMessagesBloc extends Bloc<GetMessagesEvent, GetMessagesState> {
       (event, emit) async {
         if (event is FetchMessagesEvent) {
           try {
-
-            
+            emit(
+              GetMessagesloading(),
+            );
             await for (final response
                 in homeRepoImpl.fetchStreamMessages(chatId: event.chatId)) {
               response.fold(

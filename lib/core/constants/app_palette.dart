@@ -1,41 +1,27 @@
 import 'package:flutter/material.dart';
 
 abstract class AppPalette {
-  // Dark mode scaffold color
-  static const kDarkScaffoldColor = Color(0xff1E1E1E);
+  static const kDarkScaffoldColor = Color(0xff101014);
 
-  // Light mode scaffold color
   static const kLightScaffoldColor = Colors.white;
 
-  // Primary color: Slightly vibrant for elements that need highlighting
   static const kPrimaryColor = Color(0xff3B3ABE);
 
-  static const kSecondaryDarkColor = Color(0xff242424);
+  static const kSecondaryDarkColor = Color(0xff1C1C1E);
 
-  static const kWhiteModeButtom = Colors.green;
+  static const kWhiteModeButtom = Colors.black;
   static const kDarkModeButtom = Colors.white;
-  
+
   static const kwhitModeMessageColor = Color(0xffF5F5F5);
-  static const kwhitDarkMessageColor = Color(0xff2D2D2D);
 
-  // Dark mode icon and navigation bar color
-  static const kGnavColor =
-      Color(0xff2E3A59); // Slate Blue for dark mode accents
+  static const kGnavColor = Color(0xff2E3A59);
 
-  // Background for widgets (like cards) in dark mode with subtle contrast
-  static const kCardColor = Color(0xff37474F); // Dark Grayish Cyan
-
-  // Text colors
-  static const kTextPrimaryColor = Color(0xffE0E0E0); // Off-white for main text
-  static const kTextSecondaryColor =
-      Color(0xffB0BEC5); // Muted Gray for secondary text
-
-  // White with slight opacity for overlays or buttons
+  static const kCardColor = Color(0xff37474F);
+  static const kTextPrimaryColor = Color(0xffE0E0E0);
+  static const kTextSecondaryColor = Color(0xffB0BEC5);
   static Color kWhitePrimaryColor = const Color(0xffE0E0E0).withOpacity(0.1);
 
-  // Accent color for highlights
-  static const kAccentColor = Color(0xff1EC6B1); // Vibrant Teal
+  static const kAccentColor = Color(0xff1EC6B1);
 
-  // Light theme accent color
   static const kAmberColor = Colors.amber;
 }

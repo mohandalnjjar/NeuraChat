@@ -67,8 +67,6 @@ class _ForGotPasswordFromState extends State<ForGotPasswordFrom> {
             },
             child: Text(
               S.of(context).resetPassword,
-              style:
-                  AppStyles.styleBold17(context).copyWith(color: Colors.black),
             ),
           ),
         ],

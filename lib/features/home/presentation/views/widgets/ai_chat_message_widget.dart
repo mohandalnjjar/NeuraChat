@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
@@ -36,8 +35,7 @@ class AiChatMessageWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 5),
-          const Icon(FeatherIcons.messageCircle),
+         
         ],
       ),
     );

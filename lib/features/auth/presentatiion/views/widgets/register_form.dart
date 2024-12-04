@@ -146,9 +146,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
                 child: Text(
                   S.of(context).SingUp,
-                  style: AppStyles.styleBold17(context).copyWith(
-                    color: Colors.black,
-                  ),
                 ),
               ),
               const OrWidget(),

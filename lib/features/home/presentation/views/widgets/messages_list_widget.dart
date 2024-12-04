@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neura_chat/features/home/predentation/managers/get_messages_bloc/get_messages_bloc.dart';
-import 'package:neura_chat/features/home/predentation/views/widgets/chat_message_widget.dart';
-import 'package:neura_chat/features/home/predentation/views/widgets/welcom_widget.dart';
+import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/chat_message_widget.dart';
 
 class MessagesListWidget extends StatefulWidget {
   const MessagesListWidget({
@@ -45,7 +44,7 @@ class _MessagesListWidgetState extends State<MessagesListWidget> {
             ),
           );
         } else {
-          return const WelcomWidget();
+          return const Spacer();
         }
       },
     );

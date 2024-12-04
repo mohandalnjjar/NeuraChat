@@ -35,7 +35,7 @@ class LoginView extends StatelessWidget {
             onPressed: () {
               GoRouter.of(
                 context,
-              ).push(AppRoutes.kChatView);
+              ).push(AppRoutes.kWelcomView);
             },
             icon: Text(
               S.of(context).Skip,

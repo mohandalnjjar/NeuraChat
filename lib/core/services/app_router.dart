@@ -4,8 +4,10 @@ import 'package:neura_chat/features/auth/presentatiion/views/check_auth_status_v
 import 'package:neura_chat/features/auth/presentatiion/views/forgot_password_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/login_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/sing_up.dart';
-import 'package:neura_chat/features/home/predentation/views/chat_view.dart';
+import 'package:neura_chat/features/home/presentation/views/chat_view.dart';
+import 'package:neura_chat/features/home/presentation/views/welcom_view.dart';
 import 'package:neura_chat/features/language/presentation/views/language_view.dart';
+import 'package:neura_chat/features/saved_chats/presentation/views/saved_chat_view.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -33,6 +35,14 @@ abstract class AppRouter {
       GoRoute(
         path: AppRoutes.kForgetPasswordView,
         builder: (context, state) => const ForgotPasswordView(),
+      ),
+      GoRoute(
+        path: AppRoutes.kWelcomView,
+        builder: (context, state) => const WelcomView(),
+      ),
+      GoRoute(
+        path: AppRoutes.kSavedChatView,
+        builder: (context, state) => const SavedChatView(),
       ),
     ],
   );

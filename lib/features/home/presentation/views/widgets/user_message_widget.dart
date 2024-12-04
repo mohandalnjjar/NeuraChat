@@ -26,8 +26,8 @@ class UserMessageWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: BlocProvider.of<ThemeCubit>(context).getThemeMode
-                      ? AppPalette.kwhitModeMessageColor
-                      : AppPalette.kwhitDarkMessageColor,
+                      ? AppPalette.kSecondaryDarkColor
+                      : AppPalette.kwhitModeMessageColor,
                 ),
                 child: Text(
                   message.content,

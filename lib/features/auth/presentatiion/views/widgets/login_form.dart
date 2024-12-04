@@ -141,9 +141,6 @@ class _LoginFormState extends State<LoginForm> {
                   },
                   child: Text(
                     S.of(context).login,
-                    style: AppStyles.styleBold17(context).copyWith(
-                      color: Colors.black,
-                    ),
                   ),
                 ),
                 const OrWidget(),

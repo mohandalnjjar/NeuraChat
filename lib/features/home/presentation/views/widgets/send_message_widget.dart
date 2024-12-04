@@ -6,8 +6,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
-import 'package:neura_chat/features/home/predentation/managers/get_messages_bloc/get_messages_bloc.dart';
-import 'package:neura_chat/features/home/predentation/managers/send_message_cubit/send_message_cubit.dart';
+import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
+import 'package:neura_chat/features/home/presentation/managers/send_message_cubit/send_message_cubit.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 import 'package:uuid/uuid.dart';
 
@@ -57,8 +57,8 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: BlocProvider.of<ThemeCubit>(context).getThemeMode
-                  ? AppPalette.kwhitModeMessageColor
-                  : AppPalette.kwhitDarkMessageColor,
+                  ? AppPalette.kSecondaryDarkColor
+                  : AppPalette.kwhitModeMessageColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -70,29 +70,12 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
                   onFieldSubmitted: (message) async {
                     final message = _controller.text.trim();
                     if (message.isNotEmpty) {
-                      context.read<MessageCubit>().sendMessage(
-                            chatMessageModel: ChatMessageModel(
-                              chatId: chatId,
-                              createdAt: Timestamp.now(),
-                              message: Message(
-                                isUser: true,
-                                content: message,
-                              ),
-                            ),
-                          );
-                      _controller.clear();
-                      setState(() {
-                        isEmpty = true;
-                      });
+                      sendToApi(context, message);
                     }
                   },
                   onChanged: (value) {
                     setState(() {
-                      if (_controller.text.isEmpty) {
-                        isEmpty = true;
-                      } else {
-                        isEmpty = false;
-                      }
+                      isEmpty = value.trim().isEmpty;
                     });
                   },
                   decoration: InputDecoration(
@@ -151,30 +134,7 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
                               onTap: () async {
                                 final message = _controller.text.trim();
                                 if (message.isNotEmpty) {
-                                  context.read<MessageCubit>().sendMessage(
-                                        chatMessageModel: ChatMessageModel(
-                                          chatId: chatId,
-                                          createdAt: Timestamp.now(),
-                                          message: Message(
-                                            isUser: true,
-                                            content: message,
-                                          ),
-                                        ),
-                                      );
-
-                                  if (!fetched) {
-                                    BlocProvider.of<GetMessagesBloc>(context)
-                                        .add(
-                                      FetchMessagesEvent(chatId: chatId),
-                                    );
-                                    setState(() {
-                                      fetched = true;
-                                    });
-                                  }
-                                  _controller.clear();
-                                  setState(() {
-                                    isEmpty = true;
-                                  });
+                                  sendToApi(context, message);
                                 }
                               },
                               child: const Icon(
@@ -193,5 +153,31 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
         );
       },
     );
+  }
+
+  void sendToApi(BuildContext context, String message) {
+    context.read<MessageCubit>().sendMessage(
+          chatMessageModel: ChatMessageModel(
+            chatId: chatId,
+            createdAt: Timestamp.now(),
+            message: Message(
+              isUser: true,
+              content: message,
+            ),
+          ),
+        );
+
+    if (!fetched) {
+      BlocProvider.of<GetMessagesBloc>(context).add(
+        FetchMessagesEvent(chatId: chatId),
+      );
+      setState(() {
+        fetched = true;
+      });
+    }
+    _controller.clear();
+    setState(() {
+      isEmpty = true;
+    });
   }
 }

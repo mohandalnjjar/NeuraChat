@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
+import 'package:neura_chat/core/constants/text_styles.dart';
 
 ThemeData appThemeData({required bool isDark, required BuildContext context}) {
   return ThemeData(
@@ -13,20 +14,20 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
     iconTheme: IconThemeData(color: isDark ? Colors.white : Colors.black),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        foregroundColor: isDark ? Colors.black : Colors.white,
         backgroundColor:
             isDark ? AppPalette.kDarkModeButtom : AppPalette.kWhiteModeButtom,
+        padding: const EdgeInsets.all(13),
+        textStyle: isDark
+            ? AppStyles.styleBold19(context)
+            : AppStyles.styleBold19(context),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 0,
-        padding: const EdgeInsets.all(
-          13,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: isDark
-          ? AppPalette.kwhitDarkMessageColor
+          ? AppPalette.kSecondaryDarkColor
           : AppPalette.kwhitModeMessageColor,
     ),
     scaffoldBackgroundColor:
@@ -52,3 +53,4 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
     ),
   );
 }
+

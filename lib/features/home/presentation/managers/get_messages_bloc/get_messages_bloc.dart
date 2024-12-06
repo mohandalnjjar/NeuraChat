@@ -16,8 +16,6 @@ class GetMessagesBloc extends Bloc<GetMessagesEvent, GetMessagesState> {
       (event, emit) async {
         if (event is FetchMessagesEvent) {
           try {
-
-            
             emit(
               GetMessagesloading(),
             );

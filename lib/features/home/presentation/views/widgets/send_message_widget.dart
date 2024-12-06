@@ -16,14 +16,12 @@ class SendMessageWidget extends StatefulWidget {
     super.key,
     this.hintText,
     this.contentPadding,
-    required this.uploadAssetsButtom,
     this.initialValue,
   });
 
   final String? hintText;
   final String? initialValue;
   final EdgeInsetsGeometry? contentPadding;
-  final Widget uploadAssetsButtom;
 
   @override
   State<SendMessageWidget> createState() => _SendMessageWidgetState();
@@ -31,14 +29,19 @@ class SendMessageWidget extends StatefulWidget {
 
 class _SendMessageWidgetState extends State<SendMessageWidget> {
   final TextEditingController controller = TextEditingController();
+
   final HomeRepoImpl homeRepoImpl = HomeRepoImpl();
   late String chatId;
+  late FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
     chatId = const Uuid().v4();
-
+    focusNode = FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(focusNode);
+    });
     controller.text = widget.initialValue ?? "";
     isEmpty = controller.text.trim().isEmpty;
   }
@@ -64,12 +67,13 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
               color: BlocProvider.of<ThemeCubit>(context).getThemeMode
                   ? AppPalette.kSecondaryDarkColor
                   : AppPalette.kwhitModeMessageColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
+                  focusNode: focusNode,
                   maxLines: null,
                   controller: controller,
                   onFieldSubmitted: (message) async {
@@ -149,7 +153,13 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
                             ),
                           ),
                     const Spacer(),
-                    widget.uploadAssetsButtom,
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
+                        FeatherIcons.plus,
+                        size: 27,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -161,7 +171,7 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
   }
 
   void sendToApi(BuildContext context, String message) {
-    context.read<MessageCubit>().sendMessage(
+    context.read<SendMessageCubit>().sendMessage(
           chatMessageModel: ChatMessageModel(
             chatId: chatId,
             createdAt: Timestamp.now(),
@@ -181,8 +191,10 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
       });
     }
     controller.clear();
+
     setState(() {
       isEmpty = true;
     });
+    FocusScope.of(context).unfocus();
   }
 }

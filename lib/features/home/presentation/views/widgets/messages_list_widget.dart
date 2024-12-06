@@ -32,6 +32,15 @@ class _MessagesListWidgetState extends State<MessagesListWidget> {
     return BlocBuilder<GetMessagesBloc, GetMessagesState>(
       builder: (context, state) {
         if (state is GetMessagesSuccess) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_controller.hasClients) {
+              _controller.animateTo(
+                _controller.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            }
+          });
           return Expanded(
             child: ListView.builder(
               controller: _controller,

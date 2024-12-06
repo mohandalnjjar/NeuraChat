@@ -14,7 +14,7 @@ class ChatView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MessageCubit(
+          create: (context) => SendMessageCubit(
             homeRepoImpl: HomeRepoImpl(),
           ),
         ),

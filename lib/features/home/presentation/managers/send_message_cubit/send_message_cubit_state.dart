@@ -1,12 +1,12 @@
-abstract class MessageState {}
+abstract class SendMessageState {}
 
-class MessageInitial extends MessageState {}
+class MessageInitial extends SendMessageState {}
 
-class MessageLoading extends MessageState {}
+class MessageLoading extends SendMessageState {}
 
-class MessageSentSuccess extends MessageState {}
+class MessageSentSuccess extends SendMessageState {}
 
-class MessageSentFailure extends MessageState {
+class MessageSentFailure extends SendMessageState {
   final String errorMessage;
 
   MessageSentFailure({required this.errorMessage});

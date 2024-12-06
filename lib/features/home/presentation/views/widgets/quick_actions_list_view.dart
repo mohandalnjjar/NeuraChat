@@ -20,13 +20,6 @@ class QuickActionsListView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: AppPadding.globalPadding,
-                  child: Text(
-                    "generate",
-                    style: AppStyles.styleGreyReg16(context),
-                  ),
-                ),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * .22,
                   child: ListView.builder(

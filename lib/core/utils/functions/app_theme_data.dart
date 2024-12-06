@@ -5,7 +5,6 @@ import 'package:neura_chat/core/constants/text_styles.dart';
 
 ThemeData appThemeData({required bool isDark, required BuildContext context}) {
   return ThemeData(
-    splashColor: Colors.transparent,
     appBarTheme: AppBarTheme(
       backgroundColor: isDark
           ? AppPalette.kDarkScaffoldColor
@@ -53,4 +52,3 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
     ),
   );
 }
-

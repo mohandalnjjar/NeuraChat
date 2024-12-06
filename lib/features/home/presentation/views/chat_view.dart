@@ -7,8 +7,8 @@ import 'package:neura_chat/features/home/presentation/views/widgets/chat_view_bo
 import 'package:neura_chat/features/home/presentation/views/widgets/my_app_bar.dart';
 
 class ChatView extends StatelessWidget {
-  const ChatView({super.key});
-
+  const ChatView({super.key, this.initialValue});
+  final String? initialValue;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -24,12 +24,14 @@ class ChatView extends StatelessWidget {
           ),
         ),
       ],
-      child: const Scaffold(
-        appBar: PreferredSize(
+      child: Scaffold(
+        appBar: const PreferredSize(
           preferredSize: Size.fromHeight(60),
           child: MyAppBar(),
         ),
-        body: HomeViewBody(),
+        body: ChatViewBody(
+          initialValue: initialValue,
+        ),
       ),
     );
   }

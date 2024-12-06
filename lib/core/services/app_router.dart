@@ -22,7 +22,9 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.kChatView,
-        builder: (context, state) => const ChatView(),
+        builder: (context, state) => ChatView(
+          initialValue: state.extra as String?,
+        ),
       ),
       GoRoute(
         path: AppRoutes.kLanguageView,

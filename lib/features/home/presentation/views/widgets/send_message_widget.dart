@@ -17,9 +17,11 @@ class SendMessageWidget extends StatefulWidget {
     this.hintText,
     this.contentPadding,
     required this.uploadAssetsButtom,
+    this.initialValue,
   });
 
   final String? hintText;
+  final String? initialValue;
   final EdgeInsetsGeometry? contentPadding;
   final Widget uploadAssetsButtom;
 
@@ -28,7 +30,7 @@ class SendMessageWidget extends StatefulWidget {
 }
 
 class _SendMessageWidgetState extends State<SendMessageWidget> {
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController controller = TextEditingController();
   final HomeRepoImpl homeRepoImpl = HomeRepoImpl();
   late String chatId;
 
@@ -36,11 +38,14 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
   void initState() {
     super.initState();
     chatId = const Uuid().v4();
+
+    controller.text = widget.initialValue ?? "";
+    isEmpty = controller.text.trim().isEmpty;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -66,9 +71,9 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
               children: [
                 TextFormField(
                   maxLines: null,
-                  controller: _controller,
+                  controller: controller,
                   onFieldSubmitted: (message) async {
-                    final message = _controller.text.trim();
+                    final message = controller.text.trim();
                     if (message.isNotEmpty) {
                       sendToApi(context, message);
                     }
@@ -132,7 +137,7 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
                             ),
                             child: GestureDetector(
                               onTap: () async {
-                                final message = _controller.text.trim();
+                                final message = controller.text.trim();
                                 if (message.isNotEmpty) {
                                   sendToApi(context, message);
                                 }
@@ -175,7 +180,7 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
         fetched = true;
       });
     }
-    _controller.clear();
+    controller.clear();
     setState(() {
       isEmpty = true;
     });

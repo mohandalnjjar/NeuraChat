@@ -15,7 +15,7 @@ class WelcomView extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: AppBar(
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           title: Text(
             S.of(context).Neura,
             style: AppStyles.styleSemiBold24(context),

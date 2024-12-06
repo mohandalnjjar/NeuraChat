@@ -6,10 +6,13 @@ import 'package:neura_chat/features/home/presentation/views/widgets/messages_lis
 import 'package:neura_chat/features/home/presentation/views/widgets/send_message_widget.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({
+class ChatViewBody extends StatelessWidget {
+  const ChatViewBody({
     super.key,
+    this.initialValue,
   });
+
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class HomeViewBody extends StatelessWidget {
       children: [
         const MessagesListWidget(),
         SendMessageWidget(
+          initialValue: initialValue,
           hintText: S.of(context).AskAnyQuestion,
           uploadAssetsButtom: GestureDetector(
             onTap: () {

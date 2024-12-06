@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/services/api_services.dart';
+import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo.dart';
 import 'package:uuid/uuid.dart';
@@ -131,6 +132,34 @@ class HomeRepoImpl extends HomeRepo {
       }
     } catch (e) {
       yield left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<FastActionModel>>> fetchFastActions({
+    required String currentLang,
+  }) async {
+    try {
+      var docSnapshot = await FirebaseFirestore.instance
+          .collection('fastActions')
+          .doc(currentLang)
+          .get();
+
+      List<dynamic> actionsData = docSnapshot.data()?['actions'] ?? [];
+
+      final allFastActions = actionsData
+          .map(
+            (data) => FastActionModel.fromFirebase(data),
+          )
+          .toList();
+
+      return right(allFastActions);
+    } catch (e) {
+      return left(
         ServerFailure(
           errorMessage: e.toString(),
         ),

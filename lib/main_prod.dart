@@ -6,6 +6,8 @@ import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/check_login_cubit/check_auth_status_cubit.dart';
+import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
+import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
@@ -48,6 +50,16 @@ class NeuraChat extends StatelessWidget {
             authRepoImpl: AuthRepoImpl(),
           ),
         ),
+        BlocProvider(
+          create: (context) => FastActionsBloc(
+            homeRepoImpl: HomeRepoImpl(),
+          )..add(
+              FetchFastActionsBlocEvent(
+                currenLanguage:
+                    BlocProvider.of<LanguageCubit>(context).currentLanguage,
+              ),
+            ),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeCubitState>(
         builder: (context, state) {
@@ -68,7 +80,7 @@ class NeuraChat extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(
-                  isDark: !!BlocProvider.of<ThemeCubit>(context).themeMode,
+                  isDark: BlocProvider.of<ThemeCubit>(context).themeMode,
                   context: context,
                 ),
               );

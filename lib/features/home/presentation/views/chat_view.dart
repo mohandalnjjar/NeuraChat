@@ -4,7 +4,7 @@ import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/send_message_cubit/send_message_cubit.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/chat_view_body.dart';
-import 'package:neura_chat/features/home/presentation/views/widgets/my_app_bar.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/chat_view_my_app_bar.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key, this.initialValue});
@@ -26,8 +26,8 @@ class ChatView extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: MyAppBar(),
+          preferredSize: Size.fromHeight(80),
+          child: ChatViewAppBar(),
         ),
         body: ChatViewBody(
           initialValue: initialValue,

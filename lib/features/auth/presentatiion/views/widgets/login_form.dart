@@ -42,14 +42,14 @@ class _LoginFormState extends State<LoginForm> {
         if (state is GoogleLoginFailed) {
           context.pop();
 
-          alertPopUp(context: context, message: state.errorMessage);
+          popUpAlert(context: context, message: state.errorMessage);
           context.pop();
         } else if (state is GoogleLoginDone) {
           context.pop();
 
           GoRouter.of(context).pushReplacement(AppRoutes.kChatView);
 
-          alertPopUp(context: context, message: 'Done');
+          popUpAlert(context: context, message: 'Done');
           context.pop();
         }
       },

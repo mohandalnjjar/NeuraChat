@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
 import 'package:neura_chat/core/utils/widgets/my_button.dart';
+import 'package:neura_chat/core/utils/widgets/my_icon_button.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
@@ -23,14 +24,16 @@ class LanguageViewSliverAppBar extends StatelessWidget {
         vertical: 20,
       ),
       sliver: SliverAppBar(
-        leading: GestureDetector(
-          onTap: () => context.pop(),
-          child: const Icon(Icons.arrow_back_ios_new),
+        leading: MyIconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+          ),
+          onPressed: () => GoRouter.of(context).pop(),
         ),
         centerTitle: true,
         title: Text(
           S.of(context).language,
-          style: AppStyles.styleSemiBold27(context),
+          style: AppStyles.styleSemiBold24(context),
         ),
         actions: [
           CustomButton(
@@ -41,7 +44,7 @@ class LanguageViewSliverAppBar extends StatelessWidget {
             onTap: () {
               if (BlocProvider.of<LanguageCubit>(context).currentLanguage ==
                   selectedLanguage) {
-                alertPopUp(
+                popUpAlert(
                   context: context,
                   message: S.of(context).alreadyUsed,
                 );

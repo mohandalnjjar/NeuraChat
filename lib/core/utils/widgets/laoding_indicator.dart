@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:neura_chat/core/constants/app_images.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
@@ -29,25 +31,31 @@ class LoadingIndicator extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: BlocProvider.of<ThemeCubit>(context).themeMode
-                        ? AppPalette.kDarkScaffoldColor
-                        : AppPalette.kLightScaffoldColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 20),
-                      Text(
-                        S.of(context).loading,
-                        style: AppStyles.style700w16(context),
+                BlocBuilder<ThemeCubit, ThemeCubitState>(
+                  builder: (context, state) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: BlocProvider.of<ThemeCubit>(context).themeMode
+                            ? AppPalette.kDarkScaffoldColor
+                            : AppPalette.kLightScaffoldColor,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ],
-                  ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Lottie.asset(
+                            Assets.imagesLottieYaHabibi,
+                            height: 88,
+                          ),
+                          Text(
+                            S.of(context).loading,
+                            style: AppStyles.style700w16(context),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

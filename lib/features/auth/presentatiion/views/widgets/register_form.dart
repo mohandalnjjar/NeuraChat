@@ -51,11 +51,11 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
         );
         if (state is GoogleLoginFailed) {
-          alertPopUp(context: context, message: state.errorMessage);
+          popUpAlert(context: context, message: state.errorMessage);
         } else {
-          GoRouter.of(context).push(AppRoutes.kChatView);
+          GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
 
-          alertPopUp(context: context, message: 'Done');
+          popUpAlert(context: context, message: 'Done');
         }
       },
       builder: (context, state) {

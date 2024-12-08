@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neura_chat/core/utils/widgets/my_icon_button.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/google_login_cubit/google_login_cubit.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/signup_cubit/sign_up_cubit.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/widgets/register_view_body.dart';
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+class SignUpView extends StatelessWidget {
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,11 @@ class RegisterView extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: Center(
-            child: IconButton(
-              onPressed: () {
-                context.pop();
-              },
+            child: MyIconButton(
               icon: const Icon(
                 Icons.arrow_back_ios_new,
-                size: 27,
               ),
+              onPressed: () => GoRouter.of(context).pop(),
             ),
           ),
         ),
@@ -46,4 +44,3 @@ class RegisterView extends StatelessWidget {
     );
   }
 }
-

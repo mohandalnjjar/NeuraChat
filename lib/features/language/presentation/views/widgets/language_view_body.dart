@@ -44,10 +44,10 @@ class _LanguageViewBodyState extends State<LanguageViewBody> {
           const LoadingIndicator(inAsyncCall: true);
         } else if (state is LanguageChangeDone) {
           context.pop();
-          alertPopUp(
+          popUpAlert(
               context: context, message: S.of(context).changedSuccessfully);
         } else {
-          alertPopUp(
+          popUpAlert(
             context: context,
             message: S.of(context).tryAgain,
           );

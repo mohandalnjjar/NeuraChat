@@ -15,10 +15,12 @@ abstract class AuthRepo {
 
   Future<Either<Failures, void>> googleLogin();
 
-  Future<void> addUserDetailsFistTime(
-      {required String name, required String email});
+  Future<void> addUserDetailsFistTime({
+    required String name,
+    required String email,
+  });
 
-  Future<void> setAuthStatues();
-
-  Future<bool> getAuthStatus();
+  Future<Either<Failures, bool>> checkAuthState();
+  Future<Either<Failures, void>> logOut();
+  Future<Either<Failures, void>> signInAnonymously();
 }

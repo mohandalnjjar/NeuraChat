@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
-import 'package:neura_chat/features/auth/presentatiion/managers/check_login_cubit/check_auth_status_cubit.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/check_auth_state_bloc/check_auth_state_bloc.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
@@ -22,33 +22,48 @@ void main(List<String> args) async {
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'Neura Chat',
   );
+  //ThemeCubit
+  final themeRepo = ThemeRepoImpl();
+  final themeCubit = ThemeCubit(themeRepo);
+  await themeCubit.getTheme();
+  //CheckAuthBloc
+
+  final authRepoImpl = AuthRepoImpl();
+  final authBloc = CheckAuthStateBloc(authRepoImpl: authRepoImpl);
+  authBloc.add(PerformCheckAuthEvent());
 
   runApp(
-    const NeuraChat(),
+    NeuraChat(
+      themeCubit: themeCubit,
+      authBloc: authBloc,
+    ),
   );
 }
 
 class NeuraChat extends StatelessWidget {
-  const NeuraChat({super.key});
+  final ThemeCubit themeCubit;
+  final CheckAuthStateBloc authBloc;
+
+  const NeuraChat({
+    super.key,
+    required this.themeCubit,
+    required this.authBloc,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ThemeCubit(
-            ThemeRepoImpl(),
-          )..getTheme(context: context),
+        BlocProvider.value(
+          value: authBloc,
+        ),
+        BlocProvider.value(
+          value: themeCubit,
         ),
         BlocProvider(
           create: (context) => LanguageCubit(
             languageRepoImpl: LanguageRepoImpl(),
           )..getAppLanguage(context: context),
-        ),
-        BlocProvider(
-          create: (context) => CheckAuthStatusCubit(
-            authRepoImpl: AuthRepoImpl(),
-          ),
         ),
         BlocProvider(
           create: (context) => FastActionsBloc(
@@ -80,7 +95,7 @@ class NeuraChat extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(
-                  isDark: BlocProvider.of<ThemeCubit>(context).themeMode,
+                  isDark: BlocProvider.of<ThemeCubit>(context).getThemeMode,
                   context: context,
                 ),
               );

@@ -28,11 +28,11 @@ class MobileRegisterViewLayotu extends StatelessWidget {
                 ),
               );
               if (state is SignUpSuccess) {
-                GoRouter.of(context).pushReplacement(AppRoutes.kChatView);
-                alertPopUp(context: context, message: 'Created');
+                GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
+                popUpAlert(context: context, message: 'Created');
               }
               if (state is SignUpFailure) {
-                alertPopUp(context: context, message: state.errorMessage);
+                popUpAlert(context: context, message: state.errorMessage);
               }
             },
             child: const RegisterForm(),

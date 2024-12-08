@@ -22,8 +22,8 @@ class ThemeCubit extends Cubit<ThemeCubitState> {
     );
   }
 
-  Future<void> getTheme({required BuildContext context}) async {
-    themeMode = await themeRepoImpl.getTheme(context: context);
+  Future<void> getTheme() async {
+    themeMode = await themeRepoImpl.getTheme();
     emit(
       GetThemeCubitSuccess(),
     );

@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:neura_chat/core/constants/app_keys.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/utils/functions/check_internet_connectivity.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -182,16 +180,58 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<void> setAuthStatues() async {
-    final preferences = await SharedPreferences.getInstance();
+  Future<Either<Failures, bool>> checkAuthState() async {
+    try {
+      final User? user = auth.currentUser;
 
-    await preferences.setBool(AppKeys.kIsSeenKey, true);
+      if (user != null) {
+        return right(user.isAnonymous);
+      } else {
+        return left(
+          FirebaseAuthExcep(
+            errorMessage: "Loggin to get full access",
+          ),
+        );
+      }
+    } on Exception catch (e) {
+      return left(
+        FirebaseAuthExcep(errorMessage: "An unexpected error occurred: $e"),
+      );
+    }
   }
 
   @override
-  Future<bool> getAuthStatus() async {
-    final preferences = await SharedPreferences.getInstance();
-    return preferences.getBool(AppKeys.kIsSeenKey) ?? false;
-    
+  Future<Either<Failures, void>> logOut() async {
+    try {
+      final User? user = auth.currentUser;
+
+      if (user != null && user.isAnonymous) {
+        await user.delete();
+      }
+      await auth.signOut();
+
+      return right(null);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          errorMessage: 'can\'t log out',
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> signInAnonymously() async {
+    try {
+      await auth.signInAnonymously();
+
+      return right(null);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          errorMessage: "Failed to sign in",
+        ),
+      );
+    }
   }
 }

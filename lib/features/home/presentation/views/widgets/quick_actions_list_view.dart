@@ -70,7 +70,7 @@ class QuickActionsListView extends StatelessWidget {
         } else if (state is FetchFastActionsBlocFailed) {
           return Text(state.errorMessage);
         } else {
-          return const Text("else");
+          return const Text("Check You internet connections");
         }
       },
     );

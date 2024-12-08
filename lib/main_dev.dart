@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
+import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
+import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
@@ -17,28 +19,44 @@ void main(List<String> args) async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-    name: 'Neura Chat Dev',
+    name: 'Neura Chat dev',
   );
+
+  final themeRepo = ThemeRepoImpl();
+  final themeCubit = ThemeCubit(themeRepo);
+  await themeCubit.getTheme();
   runApp(
-    const NeuraChat(),
+    NeuraChat(themeCubit: themeCubit),
   );
 }
 
 class NeuraChat extends StatelessWidget {
-  const NeuraChat({super.key});
+  final ThemeCubit themeCubit;
+
+  const NeuraChat({super.key, required this.themeCubit});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) =>
-              ThemeCubit(ThemeRepoImpl())..getTheme(context: context),
+        BlocProvider.value(
+          value: themeCubit,
         ),
         BlocProvider(
           create: (context) => LanguageCubit(
             languageRepoImpl: LanguageRepoImpl(),
           )..getAppLanguage(context: context),
+        ),
+     
+        BlocProvider(
+          create: (context) => FastActionsBloc(
+            homeRepoImpl: HomeRepoImpl(),
+          )..add(
+              FetchFastActionsBlocEvent(
+                currenLanguage:
+                    BlocProvider.of<LanguageCubit>(context).currentLanguage,
+              ),
+            ),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeCubitState>(
@@ -56,11 +74,11 @@ class NeuraChat extends StatelessWidget {
                   GlobalCupertinoLocalizations.delegate,
                 ],
                 supportedLocales: S.delegate.supportedLocales,
-                title: 'Neura Dev',
+                title: 'Neura',
                 debugShowCheckedModeBanner: false,
                 routerConfig: AppRouter.router,
                 theme: appThemeData(
-                  isDark: !BlocProvider.of<ThemeCubit>(context).themeMode,
+                  isDark: BlocProvider.of<ThemeCubit>(context).getThemeMode,
                   context: context,
                 ),
               );
@@ -71,4 +89,3 @@ class NeuraChat extends StatelessWidget {
     );
   }
 }
-

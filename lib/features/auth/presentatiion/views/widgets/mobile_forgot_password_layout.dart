@@ -27,10 +27,10 @@ class MobileForgotPassswordBody extends StatelessWidget {
             ),
           );
           if (state is RestPasswordFailed) {
-            alertPopUp(context: context, message: state.errorMessage);
+            popUpAlert(context: context, message: state.errorMessage);
             context.pop();
           } else if (state is RestPasswordDone) {
-            alertPopUp(
+            popUpAlert(
               context: context,
               message: S.of(context).checkYourEmail,
             );

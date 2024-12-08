@@ -3,7 +3,7 @@ import 'package:neura_chat/core/utils/widgets/desktop_alert_pop_up.dart';
 import 'package:neura_chat/core/utils/widgets/mobile_alert_pop_up.dart';
 import 'package:neura_chat/core/utils/widgets/adaptive_layout.dart';
 
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> alertPopUp({
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> popUpAlert({
   required BuildContext context,
   required String message,
 }) {

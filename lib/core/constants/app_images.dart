@@ -10,6 +10,10 @@ class Assets {
   /// assets/images/E8xqTwM18V.json
   static const String imagesE8xqTwM18V = "assets/images/E8xqTwM18V.json";
 
+  /// Assets for imagesFin
+  /// assets/images/fin.png
+  static const String imagesFin = "assets/images/fin.png";
+
   /// Assets for imagesGermanyFlag
   /// assets/images/Germany_flag.png
   static const String imagesGermanyFlag = "assets/images/Germany_flag.png";
@@ -33,6 +37,10 @@ class Assets {
   /// Assets for imagesUkFlag
   /// assets/images/uk_flag.png
   static const String imagesUkFlag = "assets/images/uk_flag.png";
+
+  /// Assets for imagesUnknownUser
+  /// assets/images/unknown_user.png
+  static const String imagesUnknownUser = "assets/images/unknown_user.png";
 
   /// Assets for imagesVoice
   /// assets/images/voice.png

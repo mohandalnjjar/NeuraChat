@@ -88,38 +88,3 @@ class ServerFailure extends Failures {
 class ImageError extends Failures {
   ImageError({required super.errorMessage});
 }
-
-class StripeFailure extends Failures {
-  StripeFailure({required super.errorMessage});
-
-  factory StripeFailure.fromStripeException({required String errorCode}) {
-    if (errorCode == 'card_declined') {
-      return StripeFailure(errorMessage: 'The card was declined.');
-    } else if (errorCode == 'expired_card') {
-      return StripeFailure(errorMessage: 'The card has expired.');
-    } else if (errorCode == 'null') {
-      return StripeFailure(errorMessage: 'The payment canceld.');
-    } else if (errorCode == 'incorrect_cvc') {
-      return StripeFailure(errorMessage: 'The CVC code is incorrect.');
-    } else if (errorCode == 'incorrect_number') {
-      return StripeFailure(errorMessage: 'The card number is incorrect.');
-    } else if (errorCode == 'insufficient_funds') {
-      return StripeFailure(errorMessage: 'There are insufficient funds.');
-    } else if (errorCode == 'invalid_card_type') {
-      return StripeFailure(errorMessage: 'This card type is not supported.');
-    } else if (errorCode == 'processing_error') {
-      return StripeFailure(errorMessage: 'There was a processing error.');
-    } else if (errorCode == 'rate_limit') {
-      return StripeFailure(
-          errorMessage: 'Too many requests made to the API too quickly.');
-    } else if (errorCode == 'authentication_required') {
-      return StripeFailure(
-          errorMessage: 'Authentication is required to complete the payment.');
-    } else if (errorCode == 'invalid_request_error') {
-      return StripeFailure(errorMessage: 'Invalid request error.');
-    } else {
-      return StripeFailure(
-          errorMessage: 'An unknown error occurred: $errorCode');
-    }
-  }
-}

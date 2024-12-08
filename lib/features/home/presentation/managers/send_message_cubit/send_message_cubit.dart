@@ -20,7 +20,7 @@ class SendMessageCubit extends Cubit<SendMessageState> {
     );
 
     final result = await homeRepoImpl.sendMessage(
-      message: chatMessageModel.message.content,
+      userMessage: chatMessageModel.message.content,
     );
 
     result.fold(

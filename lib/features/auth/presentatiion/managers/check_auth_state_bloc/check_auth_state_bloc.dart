@@ -13,22 +13,22 @@ class CheckAuthStateBloc
       : super(CheckAuthStateInitial()) {
     on<CheckAuthStateEvent>((event, emit) async {
       if (event is PerformCheckAuthEvent) {
-        var response = await authRepoImpl.checkAuthState();
-
-        response.fold(
-          (filed) {
-            emit(
-              Unauthenticated(
-                authMessage: filed.errorMessage,
-              ),
-            );
-          },
-          (success) {
-            emit(
-              Authenticated(isanonymous: success),
-            );
-          },
-        );
+        await for (var response in authRepoImpl.checkAuthState()) {
+          response.fold(
+            (filed) {
+              emit(
+                Unauthenticated(
+                  authMessage: filed.errorMessage,
+                ),
+              );
+            },
+            (success) {
+              emit(
+                Authenticated(isanonymous: success),
+              );
+            },
+          );
+        }
       }
     });
   }

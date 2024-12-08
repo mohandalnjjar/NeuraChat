@@ -180,21 +180,21 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failures, bool>> checkAuthState() async {
+  Stream<Either<Failures, bool>> checkAuthState() async* {
     try {
-      final User? user = auth.currentUser;
-
-      if (user != null) {
-        return right(user.isAnonymous);
-      } else {
-        return left(
-          FirebaseAuthExcep(
-            errorMessage: "Loggin to get full access",
-          ),
-        );
+      await for (final User? user in auth.authStateChanges()) {
+        if (user != null) {
+          yield right(user.isAnonymous);
+        } else {
+          yield left(
+            FirebaseAuthExcep(
+              errorMessage: "Login to get full access",
+            ),
+          );
+        }
       }
-    } on Exception catch (e) {
-      return left(
+    } catch (e) {
+      yield left(
         FirebaseAuthExcep(errorMessage: "An unexpected error occurred: $e"),
       );
     }

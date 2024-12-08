@@ -20,7 +20,9 @@ ThemeData appThemeData({required bool isDark, required BuildContext context}) {
         textStyle: isDark
             ? AppStyles.styleBold19(context)
             : AppStyles.styleBold19(context),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         elevation: 0,
       ),
     ),

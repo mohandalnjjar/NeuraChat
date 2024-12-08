@@ -20,7 +20,7 @@ abstract class AuthRepo {
     required String email,
   });
 
-  Future<Either<Failures, bool>> checkAuthState();
+  Stream<Either<Failures, bool>> checkAuthState();
   Future<Either<Failures, void>> logOut();
   Future<Either<Failures, void>> signInAnonymously();
 }

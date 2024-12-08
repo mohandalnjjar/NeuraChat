@@ -32,9 +32,11 @@ class LoginView extends StatelessWidget {
         )
       ],
       child: Scaffold(
-        appBar: AppBar(actions: const [
-          SignInAnonymouslyButton(),
-        ]),
+        appBar: AppBar(
+          actions: const [
+            SignInAnonymouslyButton(),
+          ],
+        ),
         body: const SafeArea(
           child: LoginViewBody(),
         ),

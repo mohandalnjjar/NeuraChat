@@ -14,20 +14,21 @@ class HomeRepoImpl extends HomeRepo {
   final Uuid uuid = const Uuid();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  final List<Map<String, dynamic>> messageHistory = [];
+
   @override
-  Future<Either<Failures, MessageModel>> sendMessage(
-      {required String message}) async {
+  Future<Either<Failures, MessageModel>> sendMessage({
+    required String userMessage,
+  }) async {
     try {
+      messageHistory.add({"text": userMessage});
+
       var response = await apiServices.post(
         url:
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
         body: {
           "contents": [
-            {
-              "parts": [
-                {"text": message}
-              ]
-            }
+            {"parts": messageHistory}
           ]
         },
         apiKey: 'AIzaSyCECyK_KdAvVAW8S0KCFCPK-mSGXiUhtes',
@@ -40,17 +41,15 @@ class HomeRepoImpl extends HomeRepo {
         ),
       );
     } catch (e) {
+      print("kkkkkkkkkkk");
+      print(e.toString());
       if (e is DioException) {
-        print("tttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-        print(e.toString());
         return left(
           ServerFailure.fromDioError(
             dioException: e,
           ),
         );
       } else {
-        print("ffffffffffffffffffffffffffffffffffffffffffffffff");
-        print(e.toString());
         return left(
           ServerFailure(
             errorMessage: e.toString(),

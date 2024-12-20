@@ -7,8 +7,8 @@ import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/automation_dialog_list.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 
-class QuickActionsWidget extends StatelessWidget {
-  const QuickActionsWidget({
+class FastActionsWidget extends StatelessWidget {
+  const FastActionsWidget({
     super.key,
     required this.fastActionModel,
   });
@@ -28,7 +28,11 @@ class QuickActionsWidget extends StatelessWidget {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+        padding: const EdgeInsets.only(
+          left: 16,
+          top: 8,
+          bottom: 8,
+        ),
         child: AspectRatio(
           aspectRatio: 1 / 1.3,
           child: BlocBuilder<ThemeCubit, ThemeCubitState>(

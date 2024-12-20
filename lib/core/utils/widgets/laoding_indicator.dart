@@ -10,19 +10,14 @@ import 'package:neura_chat/generated/l10n.dart';
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({
     super.key,
-    required this.inAsyncCall,
-    this.absorbing = true,
+    this.absorbing = false,
   });
 
-  final bool inAsyncCall;
   final bool absorbing;
 
   @override
   Widget build(BuildContext context) {
-    if (!inAsyncCall) {
-      return const SizedBox.shrink();
-    }
-
+   
     return BlocBuilder<ThemeCubit, ThemeCubitState>(
       builder: (context, state) {
         return AbsorbPointer(

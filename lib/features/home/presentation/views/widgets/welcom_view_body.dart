@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/ask_me_buttom.dart';
-import 'package:neura_chat/features/home/presentation/views/widgets/quick_actions_list_view.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/fast_actions_list_view.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/welcom_header_section.dart';
 
 class WelcomViewBody extends StatefulWidget {
@@ -32,7 +32,7 @@ class _WelcomViewBodyState extends State<WelcomViewBody> {
         Spacer(),
         WelcomeHeaderSection(),
         Spacer(),
-        QuickActionsListView(),
+        FastActionsListView(),
         AskMeButton(),
       ],
     );

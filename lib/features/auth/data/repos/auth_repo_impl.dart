@@ -139,7 +139,9 @@ class AuthRepoImpl extends AuthRepo {
       final isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
       if (isNewUser) {
         await addUserDetailsFistTime(
-            name: gUser.email.replaceAll('@gmail.com', ''), email: gUser.email);
+          name: gUser.email.replaceAll('@gmail.com', ''),
+          email: gUser.email,
+        );
       }
       return right(null);
     } catch (e) {
@@ -173,7 +175,7 @@ class AuthRepoImpl extends AuthRepo {
       {
         'userId': uid,
         'name': name,
-        'profileImage': '',
+        'email': email,
         'createdAt': Timestamp.now(),
       },
     );

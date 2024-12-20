@@ -20,16 +20,21 @@ class MobileForgotPassswordBody extends StatelessWidget {
       padding: AppPadding.globalPadding,
       child: BlocConsumer<RestPasswordCubit, RestPasswordState>(
         listener: (context, state) {
-          showDialog(
-            context: context,
-            builder: (context) => LoadingIndicator(
-              inAsyncCall: state is RestPasswordLoading ? true : false,
-            ),
-          );
+          if (state is RestPasswordLoading) {
+            showDialog(
+              context: context,
+              builder: (context) => const LoadingIndicator(
+                absorbing: true,
+              ),
+            );
+          }
           if (state is RestPasswordFailed) {
+            Navigator.of(context).pop();
             popUpAlert(context: context, message: state.errorMessage);
-            context.pop();
+            Navigator.of(context).pop();
           } else if (state is RestPasswordDone) {
+            Navigator.of(context).pop();
+
             popUpAlert(
               context: context,
               message: S.of(context).checkYourEmail,

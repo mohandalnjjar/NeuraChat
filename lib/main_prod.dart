@@ -8,6 +8,7 @@ import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/check_auth_state_bloc/check_auth_state_bloc.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
+import 'package:neura_chat/features/home/presentation/managers/fetch_user_data_bloc/fetch_user_data_bloc.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
 import 'package:neura_chat/features/language/presentation/managers/language_cubit/language_cubit.dart';
 import 'package:neura_chat/features/theme/data/repos/theme_repo_impl.dart';
@@ -27,7 +28,6 @@ void main(List<String> args) async {
   final themeCubit = ThemeCubit(themeRepo);
   await themeCubit.getTheme();
   //CheckAuthBloc
-
   final authRepoImpl = AuthRepoImpl();
   final authBloc = CheckAuthStateBloc(authRepoImpl: authRepoImpl);
   authBloc.add(PerformCheckAuthEvent());
@@ -73,6 +73,13 @@ class NeuraChat extends StatelessWidget {
                 currenLanguage:
                     BlocProvider.of<LanguageCubit>(context).currentLanguage,
               ),
+            ),
+        ),
+        BlocProvider(
+          create: (context) => FetchUserDataBloc(
+            HomeRepoImpl(),
+          )..add(
+              FetchUserDataEvent(),
             ),
         ),
       ],

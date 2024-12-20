@@ -35,7 +35,6 @@ class AiChatMessageWidget extends StatelessWidget {
               ),
             ),
           ),
-         
         ],
       ),
     );

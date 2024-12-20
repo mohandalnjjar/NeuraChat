@@ -4,9 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/services/api_services.dart';
+import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/data/models/user_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class HomeRepoImpl extends HomeRepo {
@@ -21,28 +24,42 @@ class HomeRepoImpl extends HomeRepo {
     required String userMessage,
   }) async {
     try {
-      messageHistory.add({"text": userMessage});
+      messageHistory.add(
+        {
+          "role": "user",
+          "parts": [
+            {"text": userMessage},
+          ],
+        },
+      );
 
       var response = await apiServices.post(
         url:
             'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
         body: {
-          "contents": [
-            {"parts": messageHistory}
-          ]
+          "contents": messageHistory,
         },
         apiKey: 'AIzaSyCECyK_KdAvVAW8S0KCFCPK-mSGXiUhtes',
         contentType: Headers.jsonContentType,
       );
 
+      messageHistory.add(
+        {
+          "role": "model",
+          "parts": [
+            {
+              "text": response.data['candidates'][0]['content']['parts'][0]
+                  ['text']
+            },
+          ],
+        },
+      );
       return right(
         MessageModel.fromJson(
           jsonData: response.data,
         ),
       );
     } catch (e) {
-      print("kkkkkkkkkkk");
-      print(e.toString());
       if (e is DioException) {
         return left(
           ServerFailure.fromDioError(
@@ -74,13 +91,15 @@ class HomeRepoImpl extends HomeRepo {
       final docSnapshot = await chatRef.get();
 
       if (docSnapshot.exists) {
-        await chatRef.update({
-          'messages': FieldValue.arrayUnion(
-            [
-              chatMessageModel.message.toMap(),
-            ],
-          )
-        });
+        await chatRef.update(
+          {
+            'messages': FieldValue.arrayUnion(
+              [
+                chatMessageModel.message.toMap(),
+              ],
+            )
+          },
+        );
       } else {
         await chatRef.set(
           chatMessageModel.toMap(),
@@ -157,6 +176,75 @@ class HomeRepoImpl extends HomeRepo {
           .toList();
 
       return right(allFastActions);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Stream<Either<Failures, UserModel>> fetchUserData() async* {
+    try {
+      User? user = auth.currentUser;
+
+      await for (final snapshot in FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .snapshots()) {
+        yield right(
+          UserModel.fromFireBase(
+            snapshot.data(),
+          ),
+        );
+      }
+    } catch (e) {
+      yield Left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> saveInstruction({
+    required String instruction,
+    required GeniusMode geniusMode,
+  }) async {
+    try {
+      final String geniusModeKey = geniusMode == GeniusMode.userInfo
+          ? 'geniusModeUserInfoKey'
+          : 'geniusModeInstructionsKey';
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(geniusModeKey, instruction);
+
+      return right(null);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, Map<String, String?>>> getSavedInstruction() async {
+    try {
+      final preferences = await SharedPreferences.getInstance();
+
+      final geniusKeys = ['geniusModeUserInfoKey', 'geniusModeInstructionsKey'];
+
+      final result = <String, String?>{};
+
+      for (var key in geniusKeys) {
+        result[key] = preferences.getString(key);
+      }
+
+      return right(result);
     } catch (e) {
       return left(
         ServerFailure(

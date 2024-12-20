@@ -14,16 +14,16 @@ import 'package:neura_chat/features/auth/presentatiion/views/widgets/continue_wi
 import 'package:neura_chat/features/auth/presentatiion/views/widgets/or_widget.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-class RegisterForm extends StatefulWidget {
-  const RegisterForm({
+class SignUPForm extends StatefulWidget {
+  const SignUPForm({
     super.key,
   });
 
   @override
-  State<RegisterForm> createState() => _RegisterFormState();
+  State<SignUPForm> createState() => _SignUPFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _SignUPFormState extends State<SignUPForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final _nameControler = TextEditingController();
@@ -46,8 +46,8 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         showDialog(
           context: context,
-          builder: (context) => LoadingIndicator(
-            inAsyncCall: state is GoogleLoginLoading ? true : false,
+          builder: (context) => const LoadingIndicator(
+            absorbing: true,
           ),
         );
         if (state is GoogleLoginFailed) {

@@ -21,5 +21,8 @@
   "Skip":"Skip",
   "NoInternetConnectionPleaseCheckYourNetworkSettings":"No internet connection. Please check your network settings.",
   "Neura":"Neura",
-  "AskAnyQuestion":"Ask any question"
+  "AskAnyQuestion":"Ask any question",
+  "Success":"Success",
+  "Failed":"Failed",
+  "LogOut?":"Logout?" 
 }

@@ -4,11 +4,11 @@ import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
-import 'package:neura_chat/features/home/presentation/views/widgets/quick_actions_widget.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/fast_actions_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class QuickActionsListView extends StatelessWidget {
-  const QuickActionsListView({super.key});
+class FastActionsListView extends StatelessWidget {
+  const FastActionsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class QuickActionsListView extends StatelessWidget {
                     itemCount: 5,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return QuickActionsWidget(
+                      return FastActionsWidget(
                         fastActionModel: FastActionModel(
                             name: "name",
                             description: "description",
@@ -58,7 +58,7 @@ class QuickActionsListView extends StatelessWidget {
                     itemCount: state.fastActions.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return QuickActionsWidget(
+                      return FastActionsWidget(
                         fastActionModel: state.fastActions[index],
                       );
                     },

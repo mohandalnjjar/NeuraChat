@@ -21,12 +21,17 @@ class SignInAnonymouslyButton extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) => const LoadingIndicator(
-              inAsyncCall: true,
+              absorbing: true,
             ),
           );
         } else if (state is SignInAnonymouslySuccess) {
+          Navigator.of(context).pop();
           GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
-          popUpAlert(context: context, message: "Success");
+          popUpAlert(context: context, message: S.of(context).Success);
+        } else if (state is SignInAnonymouslyFailed) {
+          Navigator.of(context).pop();
+          popUpAlert(context: context, message: S.of(context).Failed);
+          Navigator.of(context).pop();
         }
       },
       child: TextButton(

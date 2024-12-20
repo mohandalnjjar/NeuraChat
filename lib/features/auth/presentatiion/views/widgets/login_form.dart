@@ -33,24 +33,21 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<GoogleLoginCubit, GoogleLoginState>(
       listener: (context, state) {
-        showDialog(
-          context: context,
-          builder: (context) => LoadingIndicator(
-            inAsyncCall: state is GoogleLoginLoading ? true : false,
-          ),
-        );
-        if (state is GoogleLoginFailed) {
+        if (state is GoogleLoginLoading) {
+          showDialog(
+            context: context,
+            builder: (context) => const LoadingIndicator(
+              absorbing: true,
+            ),
+          );
+        } else if (state is GoogleLoginFailed) {
           context.pop();
-
           popUpAlert(context: context, message: state.errorMessage);
           context.pop();
         } else if (state is GoogleLoginDone) {
-          context.pop();
-
-          GoRouter.of(context).pushReplacement(AppRoutes.kChatView);
-
-          popUpAlert(context: context, message: 'Done');
-          context.pop();
+          Navigator.of(context).pop();
+          GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
+          popUpAlert(context: context, message: S.of(context).Success);
         }
       },
       builder: (context, state) {

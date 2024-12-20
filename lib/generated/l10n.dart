@@ -276,6 +276,28 @@ class S {
       args: [],
     );
   }
+
+  /// `Success`
+  String get Success {
+    return Intl.message(
+      'Success',
+      name: 'Success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed`
+  String get Failed {
+    return Intl.message(
+      'Failed',
+      name: 'Failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'LogOut?' key
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

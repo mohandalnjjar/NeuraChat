@@ -41,7 +41,7 @@ class _LanguageViewBodyState extends State<LanguageViewBody> {
     return BlocConsumer<LanguageCubit, LanguageState>(
       listener: (context, state) {
         if (state is LanguageLoading) {
-          const LoadingIndicator(inAsyncCall: true);
+          const LoadingIndicator();
         } else if (state is LanguageChangeDone) {
           context.pop();
           popUpAlert(
@@ -73,7 +73,7 @@ class _LanguageViewBodyState extends State<LanguageViewBody> {
                 },
                 child: SizedBox(
                   height: 89,
-                  child: LanguagePageItem(
+                  child: LanguageItem(
                     categoryItmeModel: items[index],
                     isActive: selectedLanguage == items[index].langShort,
                   ),

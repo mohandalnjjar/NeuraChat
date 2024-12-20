@@ -1,0 +1,4 @@
+enum GeniusMode {
+  userInfo,
+  instructions,
+}

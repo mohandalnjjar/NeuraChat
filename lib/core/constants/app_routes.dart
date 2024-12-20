@@ -7,4 +7,6 @@ abstract class AppRoutes {
   static const kLoginView = '/LoginView';
   static const kWelcomView = '/kWelcomView';
   static const kSavedChatView = '/kSavedChatView';
+  static const kGeniusModeView = '/kGeniusModeView';
+  static const kDetailsGeniusModeView = '/kDetailsGeniusModeView';
 }

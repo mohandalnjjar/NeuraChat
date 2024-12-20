@@ -169,6 +169,13 @@ abstract class AppStyles {
     );
   }
 
+  static TextStyle styleSemiBold20(BuildContext context) {
+    return TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: responsiveFontSize(fontSize: 20, context: context),
+    );
+  }
+
   static TextStyle styleSemiBold17(BuildContext context) {
     return TextStyle(
       fontWeight: FontWeight.w600,

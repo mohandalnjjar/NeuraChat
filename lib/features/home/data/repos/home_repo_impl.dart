@@ -24,6 +24,22 @@ class HomeRepoImpl extends HomeRepo {
     required String userMessage,
   }) async {
     try {
+      final preferences = await SharedPreferences.getInstance();
+      final userDetails =
+          preferences.getString('geniusModeUserInfoKey') ?? 'User';
+      final instructions = preferences.getString('geniusModeInstructionsKey') ??
+          'Provide helpful and engaging responses.';
+      if (messageHistory.isEmpty) {
+        messageHistory.add(
+          {
+            "role": "user",
+            "parts": [
+              {"text": "My Details:\n:$userDetails\n act as: $instructions"},
+              {"text": "Your name is Neura"},
+            ],
+          },
+        );
+      }
       messageHistory.add(
         {
           "role": "user",

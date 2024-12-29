@@ -4,9 +4,11 @@ class UserModel {
   final String userId;
   final String name;
   final String email;
+  final Map<String, dynamic> userInstructions;
   final Timestamp createdAt;
 
   UserModel({
+    required this.userInstructions,
     required this.userId,
     required this.name,
     required this.email,
@@ -19,6 +21,7 @@ class UserModel {
       name: data['name'],
       email: data['email'],
       createdAt: data['createdAt'],
+      userInstructions: data['userInstructions'] ?? {},
     );
   }
 }

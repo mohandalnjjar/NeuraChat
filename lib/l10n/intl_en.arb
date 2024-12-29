@@ -24,5 +24,6 @@
   "AskAnyQuestion":"Ask any question",
   "Success":"Success",
   "Failed":"Failed",
-  "LogOut?":"Logout?" 
+  "LogOut?":"Logout?" ,
+  "WhatWouldYouLikeNEURAToKnowAboutYouToOrovideBetterResponses?":"What would you like NEURA to know about you to provide better responses?"
 }

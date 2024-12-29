@@ -5,6 +5,7 @@ import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
+import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/save_genius_mode_data_bloc/genius_mode_data_save_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/details_genius_mode_app_bar.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/details_genius_mode_buttom_sheet.dart';
@@ -14,24 +15,42 @@ class DetailsGeniusModeView extends StatefulWidget {
     super.key,
     required this.headTitle,
     required this.geniusMode,
+    required this.bloc,
+    required this.instruction,
   });
 
   final String headTitle;
+  final String? instruction;
   final GeniusMode geniusMode;
+  final GetGeniusModeInstructionsBloc bloc;
 
   @override
   State<DetailsGeniusModeView> createState() => _DetailsGeniusModeViewState();
 }
 
 class _DetailsGeniusModeViewState extends State<DetailsGeniusModeView> {
-  final TextEditingController controller = TextEditingController();
+  late final TextEditingController controller;
   bool isContentChanged = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController(text: widget.instruction ?? '');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GeniusModeDataSaveBloc(
-        homeRepoImpl: HomeRepoImpl(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GeniusModeDataSaveBloc(
+            homeRepoImpl: HomeRepoImpl(),
+          ),
+        ),
+        BlocProvider.value(
+          value: widget.bloc,
+        ),
+      ],
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -79,7 +98,10 @@ class _DetailsGeniusModeViewState extends State<DetailsGeniusModeView> {
             ),
           ),
         ),
-        bottomSheet: DetailsGeniusModeBottomSheet(controller: controller),
+        bottomSheet: DetailsGeniusModeBottomSheet(
+          controller: controller,
+          geniusMode: widget.geniusMode,
+        ),
       ),
     );
   }

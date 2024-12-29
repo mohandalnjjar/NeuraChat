@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
+import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/save_genius_mode_data_bloc/genius_mode_data_save_bloc.dart';
 
 class GeniusModeSaveBlocButton extends StatelessWidget {
@@ -22,9 +23,11 @@ class GeniusModeSaveBlocButton extends StatelessWidget {
     return BlocConsumer<GeniusModeDataSaveBloc, GeniusModeSaveState>(
       listener: (context, state) {
         if (state is GeniusModeDataSaveSucces) {
+          BlocProvider.of<GetGeniusModeInstructionsBloc>(context).add(
+            PerformGetGeniusModeInstructionsEvent(),
+          );
           context.pop();
         }
-
         if (state is GeniusModeDataSaveFailed) {
           popUpAlert(
             context: context,

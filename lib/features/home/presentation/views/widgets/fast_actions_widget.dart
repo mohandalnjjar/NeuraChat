@@ -21,7 +21,7 @@ class FastActionsWidget extends StatelessWidget {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AutomationDialogList(
+            return FastActionsDialogList(
               fastActionsList: fastActionModel.fastActionsList,
             );
           },

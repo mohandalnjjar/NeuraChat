@@ -7,7 +7,7 @@ import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
 
-class GeniusModeTextFiled extends StatelessWidget {
+class GeniusModeTextFiled extends StatefulWidget {
   const GeniusModeTextFiled({
     super.key,
     required this.title,
@@ -18,20 +18,28 @@ class GeniusModeTextFiled extends StatelessWidget {
   final GeniusMode geniusMode;
 
   @override
+  State<GeniusModeTextFiled> createState() => _GeniusModeTextFiledState();
+}
+
+class _GeniusModeTextFiledState extends State<GeniusModeTextFiled> {
+  String? instruction;
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          title,
+          widget.title,
           style: AppStyles.styleSemiBold18(context),
         ),
         GestureDetector(
           onTap: () => GoRouter.of(context).push(
             AppRoutes.kDetailsGeniusModeView,
             extra: {
-              "title": title,
-              "geniusMode": geniusMode,
+              "title": widget.title,
+              "geniusMode": widget.geniusMode,
+              "bloc": context.read<GetGeniusModeInstructionsBloc>(),
+              "instruction": instruction,
             },
           ),
           child: Container(
@@ -41,30 +49,49 @@ class GeniusModeTextFiled extends StatelessWidget {
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: BlocBuilder<GetGeniusModeInstructionsBloc,
+            child: BlocConsumer<GetGeniusModeInstructionsBloc,
                 GetGeniusModeInstructionsState>(
+              listener: (context, state) {
+                if (state is GetGeniusModeInstructionsSuccess) {
+                  final key = widget.geniusMode == GeniusMode.userInfo
+                      ? 'geniusModeUserInfoKey'
+                      : 'geniusModeInstructionsKey';
+                  setState(
+                    () {
+                      instruction = state.instructions[key];
+                    },
+                  );
+                }
+              },
               builder: (context, state) {
                 if (state is GetGeniusModeInstructionsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: SizedBox(
+                      height: 5,
+                    ),
+                  );
                 } else if (state is GetGeniusModeInstructionsSuccess) {
-                  final instruction =
-                      state.instructions['geniusModeUserInfoKey'] ?? "Add New";
-
-                  return Text(
-                    instruction,
-                    style: AppStyles.styleRegular18(context).copyWith(
-                      color: AppPalette.kPrimaryColor,
-                    ),
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                  );
-                } else if (state is GetGeniusModeInstructionsFailed) {
-                  return Text(
-                    "Error: ",
-                    style: AppStyles.styleRegular18(context).copyWith(
-                      color: Colors.red,
-                    ),
-                  );
+                  final key = widget.geniusMode == GeniusMode.userInfo
+                      ? 'geniusModeUserInfoKey'
+                      : 'geniusModeInstructionsKey';
+                  final instruction = state.instructions[key] ?? 'Tap to add';
+                  if (instruction.isEmpty || instruction == 'Tap to add') {
+                    return Text(
+                      'Tap to add',
+                      style: AppStyles.styleRegular18(context).copyWith(
+                        color: AppPalette.kPrimaryColor,
+                      ),
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  } else {
+                    return Text(
+                      instruction,
+                      style: AppStyles.styleRegular18(context),
+                      maxLines: 5,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  }
                 } else {
                   return const SizedBox();
                 }

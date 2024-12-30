@@ -35,6 +35,7 @@ class DetailsGeniusModeBottomSheet extends StatelessWidget {
                   final tips = geniusMode == GeniusMode.userInfo
                       ? GeniusModeTipsList.userInfoTips
                       : GeniusModeTipsList.instructionsTips;
+
                   return Dialog(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(

@@ -42,7 +42,6 @@ class SendMessageCubit extends Cubit<SendMessageState> {
             ),
           ),
         );
-
         emit(
           MessageSentSuccess(),
         );

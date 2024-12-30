@@ -5,7 +5,6 @@ import 'package:neura_chat/features/auth/presentatiion/views/check_auth_status_v
 import 'package:neura_chat/features/auth/presentatiion/views/forgot_password_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/login_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/sign_up.dart';
-import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/chat_view.dart';
 import 'package:neura_chat/features/home/presentation/views/details_genius_mode_view.dart';
 import 'package:neura_chat/features/home/presentation/views/genius_mode_view.dart';
@@ -58,16 +57,9 @@ abstract class AppRouter {
         path: AppRoutes.kDetailsGeniusModeView,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>;
-          final title = args['title'] as String;
-          final geniusMode = args['geniusMode'] as GeniusMode;
-          final bloc = args["bloc"] as GetGeniusModeInstructionsBloc;
-          final instruction = args["instruction"] as String?;
-
           return DetailsGeniusModeView(
-            headTitle: title,
-            geniusMode: geniusMode,
-            bloc: bloc,
-            instruction: instruction,
+            headTitle: args['title'] as String,
+            geniusMode: args['geniusMode'] as GeniusMode,
           );
         },
       ),

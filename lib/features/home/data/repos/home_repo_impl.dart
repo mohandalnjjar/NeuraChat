@@ -4,12 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/services/api_services.dart';
-import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/models/user_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class HomeRepoImpl extends HomeRepo {
@@ -23,18 +21,31 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<Failures, MessageModel>> sendMessage({
     required String userMessage,
   }) async {
+    // Ensure the user is authenticated
+
+    final User? user = auth.currentUser;
+
+    if (user == null) {
+      return left(ServerFailure(errorMessage: 'User not authenticated.'));
+    }
+
     try {
-      final preferences = await SharedPreferences.getInstance();
-      final userDetails =
-          preferences.getString('geniusModeUserInfoKey') ?? 'User';
-      final instructions = preferences.getString('geniusModeInstructionsKey') ??
-          'Provide helpful and engaging responses.';
+      // Fetch customInstructions from Firestore
+      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      final Map<String, dynamic> customInstructions =
+          (userDoc.data() as Map<String, dynamic>?)?['customInstructions'] ??
+              {};
+
       if (messageHistory.isEmpty) {
         messageHistory.add(
           {
             "role": "user",
             "parts": [
-              {"text": "My Details:\n:$userDetails\n act as: $instructions"},
+              {"text": "My Details:\n${customInstructions.toString()}"},
               {"text": "Your name is Neura"},
             ],
           },
@@ -226,41 +237,31 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<Failures, void>> saveInstruction({
-    required String instruction,
-    required GeniusMode geniusMode,
+  Future<Either<Failures, void>> updateUserDetails({
+    String? name,
+    final String? responseMode,
+    final String? userInstuctions,
   }) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
     try {
-      final String geniusModeKey = geniusMode == GeniusMode.userInfo
-          ? 'geniusModeUserInfoKey'
-          : 'geniusModeInstructionsKey';
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(geniusModeKey, instruction);
+      final Map<String, dynamic> updateData = {};
+      if (name != null) updateData['name'] = name;
 
-      return right(null);
-    } catch (e) {
-      return left(
-        ServerFailure(
-          errorMessage: e.toString(),
-        ),
-      );
-    }
-  }
-
-  @override
-  Future<Either<Failures, Map<String, String?>>> getSavedInstruction() async {
-    try {
-      final preferences = await SharedPreferences.getInstance();
-
-      final geniusKeys = ['geniusModeUserInfoKey', 'geniusModeInstructionsKey'];
-
-      final result = <String, String?>{};
-
-      for (var key in geniusKeys) {
-        result[key] = preferences.getString(key);
+      if (responseMode != null) {
+        updateData['customInstructions.ResponseMode'] = responseMode;
       }
 
-      return right(result);
+      if (userInstuctions != null) {
+        updateData['customInstructions.UserInstuctions'] = userInstuctions;
+      }
+      if (updateData.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .update(updateData);
+      }
+      return right(null);
     } catch (e) {
       return left(
         ServerFailure(

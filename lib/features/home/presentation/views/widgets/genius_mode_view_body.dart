@@ -15,12 +15,12 @@ class GeniusModeViewBody extends StatelessWidget {
       padding: AppPadding.globalPadding,
       child: ListView(
         children: [
-          const GeniusModeTextFiled(
+          const GeniusModeTextField(
             title:
                 "What would you like NEURA to know about you to provide better responses?",
             geniusMode: GeniusMode.userInfo,
           ),
-          const GeniusModeTextFiled(
+          const GeniusModeTextField(
             title: "How Would You Like NEURA to respond?",
             geniusMode: GeniusMode.instructions,
           ),

@@ -9,9 +9,6 @@ import 'package:neura_chat/core/constants/app_routes.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/log_out_bloc/log_out_bloc_bloc.dart';
-import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
-import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
-import 'package:neura_chat/features/home/presentation/views/genius_mode_view.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/app_bar_item_widget.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/app_theme_dialog.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
@@ -38,22 +35,9 @@ class AppDrawer extends StatelessWidget {
                       EvaIcons.flash,
                     ),
                     title: 'Genius Mode',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              BlocProvider<GetGeniusModeInstructionsBloc>(
-                            create: (context) => GetGeniusModeInstructionsBloc(
-                              HomeRepoImpl(),
-                            )..add(
-                                PerformGetGeniusModeInstructionsEvent(),
-                              ),
-                            child: const GeniuesModeView(),
-                          ),
-                        ),
-                      );
-                    },
+                    onTap: () => GoRouter.of(context).push(
+                      AppRoutes.kGeniusModeView,
+                    ),
                   ),
                   AppBarItemWidget(
                     leading: const Icon(

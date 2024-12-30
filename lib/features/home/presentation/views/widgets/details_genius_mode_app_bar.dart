@@ -31,8 +31,8 @@ class DetailsGeniusModeAppBar extends StatelessWidget {
         actions: [
           GeniusModeSaveBlocButton(
             isContentChanged: isContentChanged,
-            geniusMode: geniusMode,
             controller: controller,
+            geniusMode: geniusMode,
           )
         ],
       ),

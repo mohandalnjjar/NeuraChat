@@ -2,41 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
-import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
-import 'package:neura_chat/features/home/presentation/managers/get_genius_mode_instructions_bloc/get_genius_mode_instructions_bloc.dart';
-import 'package:neura_chat/features/home/presentation/managers/save_genius_mode_data_bloc/genius_mode_data_save_bloc.dart';
+import 'package:neura_chat/features/home/presentation/managers/update_user_data_bloc/update_user_data_bloc.dart';
 
 class GeniusModeSaveBlocButton extends StatelessWidget {
   const GeniusModeSaveBlocButton({
     super.key,
     required this.isContentChanged,
-    required this.geniusMode,
     required this.controller,
+    required this.geniusMode,
   });
 
   final bool isContentChanged;
-  final GeniusMode geniusMode;
   final TextEditingController controller;
+  final GeniusMode geniusMode;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GeniusModeDataSaveBloc, GeniusModeSaveState>(
-      listener: (context, state) {
-        if (state is GeniusModeDataSaveSucces) {
-          BlocProvider.of<GetGeniusModeInstructionsBloc>(context).add(
-            PerformGetGeniusModeInstructionsEvent(),
-          );
-          context.pop();
-        }
-        if (state is GeniusModeDataSaveFailed) {
-          popUpAlert(
-            context: context,
-            message: state.errorMessage,
-          );
+    return BlocConsumer<UpdateUserDataBloc, UpdateUserDataState>(
+      listener: (BuildContext context, UpdateUserDataState state) {
+        if (state is UpdateUserDataSuccess) {
+          return context.pop();
         }
       },
       builder: (context, state) {
-        if (state is GeniusModeDataSaveLoading) {
+        if (state is UpdateUserDataLoading) {
           return const Padding(
             padding: EdgeInsets.all(8.0),
             child: SizedBox(
@@ -55,12 +44,12 @@ class GeniusModeSaveBlocButton extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                BlocProvider.of<GeniusModeDataSaveBloc>(context).add(
-                  PerformGeniusModeDataSaveEvent(
-                    geniusMode: geniusMode,
-                    instruction: controller.text,
-                  ),
-                );
+                final event = geniusMode == GeniusMode.userInfo
+                    ? PerfromUpdateUserDataEvent(
+                        userInstuctions: controller.text)
+                    : PerfromUpdateUserDataEvent(responseMode: controller.text);
+
+                BlocProvider.of<UpdateUserDataBloc>(context).add(event);
               },
               child: const Text("save"),
             ),

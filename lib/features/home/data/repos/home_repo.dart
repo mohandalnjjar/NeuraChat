@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
-import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/models/user_model.dart';
@@ -20,9 +19,8 @@ abstract class HomeRepo {
   Stream<Either<Failures, List<Message>>> fetchStreamMessages({
     required String chatId,
   });
-  Future<Either<Failures, void>> saveInstruction({
-    required String instruction,
-    required GeniusMode geniusMode,
+
+  Future<Either<Failures, void>> updateUserDetails({
+    required String? name,
   });
-  Future<Either<Failures, Map<String, String?>>> getSavedInstruction();
 }

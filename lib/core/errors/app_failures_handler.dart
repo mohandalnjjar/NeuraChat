@@ -63,8 +63,6 @@ class ServerFailure extends Failures {
           statusCode: dioException.response!.statusCode!,
           response: dioException.response!.data,
         );
-      default:
-        return ServerFailure(errorMessage: 'Try again, later');
     }
   }
 

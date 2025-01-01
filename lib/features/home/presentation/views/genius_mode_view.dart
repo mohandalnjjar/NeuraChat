@@ -10,7 +10,9 @@ class GeniuesModeView extends StatelessWidget {
     return const Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
-        child: GeniusModeViewAppBar(),
+        child: MyAppBar(
+          title: 'Genius Mode',
+        ),
       ),
       body: SafeArea(
         child: GeniusModeViewBody(),

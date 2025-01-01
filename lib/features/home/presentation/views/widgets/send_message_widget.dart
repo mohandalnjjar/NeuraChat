@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:neura_chat/core/constants/app_palette.dart';
+import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
@@ -17,11 +18,13 @@ class SendMessageWidget extends StatefulWidget {
     this.hintText,
     this.contentPadding,
     this.initialValue,
+    this.chatId,
   });
 
   final String? hintText;
   final String? initialValue;
   final EdgeInsetsGeometry? contentPadding;
+  final String? chatId;
 
   @override
   State<SendMessageWidget> createState() => _SendMessageWidgetState();
@@ -30,14 +33,14 @@ class SendMessageWidget extends StatefulWidget {
 class _SendMessageWidgetState extends State<SendMessageWidget> {
   final TextEditingController controller = TextEditingController();
 
-  final HomeRepoImpl homeRepoImpl = HomeRepoImpl();
+  final HomeRepoImpl homeRepoImpl = getIt.get<HomeRepoImpl>();
   late String chatId;
   late FocusNode focusNode;
 
   @override
   void initState() {
     super.initState();
-    chatId = const Uuid().v4();
+    chatId = widget.chatId ?? const Uuid().v4();
     focusNode = FocusNode();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);

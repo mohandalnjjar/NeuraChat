@@ -21,16 +21,13 @@ class HomeRepoImpl extends HomeRepo {
   Future<Either<Failures, MessageModel>> sendMessage({
     required String userMessage,
   }) async {
-    // Ensure the user is authenticated
-
     final User? user = auth.currentUser;
-
     if (user == null) {
-      return left(ServerFailure(errorMessage: 'User not authenticated.'));
+      return left(
+        ServerFailure(errorMessage: 'User not authenticated.'),
+      );
     }
-
     try {
-      // Fetch customInstructions from Firestore
       final DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -144,14 +141,12 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Stream<Either<Failures, List<Message>>> fetchStreamMessages({
+  Stream<Either<Failures, List<Message>>> fetchMessages({
     required String chatId,
   }) async* {
     try {
       final User? user = auth.currentUser;
-
       List<Message> previousMessages = [];
-
       await for (final snapshot in FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
@@ -264,6 +259,49 @@ class HomeRepoImpl extends HomeRepo {
       return right(null);
     } catch (e) {
       return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Stream<Either<Failures, List<SavedChatModel>>> fetchSavedChats() async* {
+    try {
+      User? user = auth.currentUser;
+      List<SavedChatModel> previousChats = [];
+
+      await for (final snapshot in FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('chats')
+          .snapshots()) {
+        List<SavedChatModel> currentChats = snapshot.docs.map(
+          (doc) {
+            return SavedChatModel.fromFirestore(doc);
+          },
+        ).toList();
+        // Find new chats
+        List<SavedChatModel> newChats = currentChats.where(
+          (newChat) {
+            return !previousChats.any(
+              (oldChat) {
+                return oldChat.chatId == newChat.chatId;
+              },
+            );
+          },
+        ).toList();
+
+        if (newChats.isNotEmpty) {
+          yield Right(newChats);
+        } else {
+          yield const Right([]);
+        }
+        previousChats = currentChats;
+      }
+    } catch (e) {
+      yield left(
         ServerFailure(
           errorMessage: e.toString(),
         ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
+import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/fetch_user_data_bloc/fetch_user_data_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/update_user_data_bloc/update_user_data_bloc.dart';
@@ -51,8 +52,7 @@ class _DetailsGeniusModeViewState extends State<DetailsGeniusModeView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UpdateUserDataBloc(
-        HomeRepoImpl(),
-      ),
+getIt.get<HomeRepoImpl>()      ),
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(80),

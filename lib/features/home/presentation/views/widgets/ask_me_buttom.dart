@@ -14,7 +14,13 @@ class AskMeButton extends StatelessWidget {
       padding: AppPadding.globalPadding,
       child: ElevatedButton(
         onPressed: () async {
-          await GoRouter.of(context).push(AppRoutes.kChatView);
+          await GoRouter.of(context).push(
+            AppRoutes.kChatView,
+            extra: {
+              'savedChats': null,
+              'initialValue': null,
+            },
+          );
         },
         child: const Text(
           "Ask Me Any Thing",

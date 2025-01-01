@@ -3,16 +3,19 @@ import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/widgets/my_icon_button.dart';
 
-class GeniusModeViewAppBar extends StatelessWidget {
-  const GeniusModeViewAppBar({
+class MyAppBar extends StatelessWidget {
+  const MyAppBar({
     super.key,
+    required this.title,
   });
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
       child: AppBar(
+        surfaceTintColor: Colors.transparent,
         automaticallyImplyLeading: false,
         centerTitle: true,
         leading: MyIconButton(
@@ -22,7 +25,7 @@ class GeniusModeViewAppBar extends StatelessWidget {
           onPressed: () => GoRouter.of(context).pop(),
         ),
         title: Text(
-          "Genius Mode",
+          title,
           style: AppStyles.styleSemiBold24(context),
         ),
       ),

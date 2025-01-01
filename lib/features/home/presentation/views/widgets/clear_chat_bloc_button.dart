@@ -16,19 +16,28 @@ class ClearChatBlocButton extends StatelessWidget {
         if (state is GetMessagesInitial) {
           return const SizedBox();
         } else {
-          return IconButton(
-            onPressed: () =>
-                GoRouter.of(context).pushReplacement(AppRoutes.kChatView),
-            icon: const CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.clear,
-                  color: Colors.white,
+          return Row(
+            children: [
+              IconButton(
+                onPressed: () => GoRouter.of(context).pushReplacement(
+                  AppRoutes.kChatView,
+                  extra: {
+                    'savedChats': null,
+                    'initialValue': null,
+                  },
+                ),
+                icon: const CircleAvatar(
+                  backgroundColor: Colors.red,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           );
         }
       },

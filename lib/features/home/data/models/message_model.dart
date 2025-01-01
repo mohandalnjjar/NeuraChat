@@ -65,4 +65,37 @@ class ChatMessageModel {
       ],
     };
   }
+
+  factory ChatMessageModel.fromFireStore(Map<String, dynamic> jsonData) {
+    return ChatMessageModel(
+      chatId: jsonData['chatId'],
+      createdAt: jsonData['createdAt'],
+      message: Message.fromFireStore(jsonData['messages']),
+    );
+  }
+}
+
+class SavedChatModel {
+  final String chatId;
+  final Timestamp createdAt;
+  final List<Message> messages;
+
+  SavedChatModel({
+    required this.chatId,
+    required this.createdAt,
+    required this.messages,
+  });
+
+  factory SavedChatModel.fromFirestore(
+      QueryDocumentSnapshot<Map<String, dynamic>> jsonData) {
+    final messagesList = jsonData['messages'] as List<dynamic>;
+    final messages =
+        messagesList.map((msg) => Message.fromFireStore(msg)).toList();
+
+    return SavedChatModel(
+      chatId: jsonData['chatId'],
+      createdAt: jsonData['createdAt'],
+      messages: messages,
+    );
+  }
 }

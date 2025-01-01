@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
+import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/check_auth_state_bloc/check_auth_state_bloc.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
@@ -17,6 +18,7 @@ import 'package:neura_chat/generated/l10n.dart';
 import 'package:neura_chat/firebase_options.dart';
 
 void main(List<String> args) async {
+  setupServiceLocator();
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -24,11 +26,11 @@ void main(List<String> args) async {
     name: 'Neura Chat',
   );
   //ThemeCubit
-  final themeRepo = ThemeRepoImpl();
+  final themeRepo = getIt.get<ThemeRepoImpl>();
   final themeCubit = ThemeCubit(themeRepo);
   await themeCubit.getTheme();
   //CheckAuthBloc
-  final authRepoImpl = AuthRepoImpl();
+  final authRepoImpl = getIt.get<AuthRepoImpl>();
   final authBloc = CheckAuthStateBloc(authRepoImpl: authRepoImpl);
   authBloc.add(PerformCheckAuthEvent());
 
@@ -62,12 +64,12 @@ class NeuraChat extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LanguageCubit(
-            languageRepoImpl: LanguageRepoImpl(),
+            languageRepoImpl: getIt.get<LanguageRepoImpl>(),
           )..getAppLanguage(context: context),
         ),
         BlocProvider(
           create: (context) => FastActionsBloc(
-            homeRepoImpl: HomeRepoImpl(),
+            homeRepoImpl: getIt.get<HomeRepoImpl>(),
           )..add(
               FetchFastActionsBlocEvent(
                 currenLanguage:
@@ -77,7 +79,7 @@ class NeuraChat extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => FetchUserDataBloc(
-            HomeRepoImpl(),
+            getIt.get<HomeRepoImpl>(),
           )..add(
               FetchUserDataEvent(),
             ),

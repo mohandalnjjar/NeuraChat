@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neura_chat/core/services/app_router.dart';
 import 'package:neura_chat/core/utils/functions/app_theme_data.dart';
+import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
 import 'package:neura_chat/features/language/data/repos/language_repo_impl.dart';
@@ -22,7 +23,7 @@ void main(List<String> args) async {
     name: 'Neura Chat dev',
   );
 
-  final themeRepo = ThemeRepoImpl();
+  final themeRepo =  getIt.get<ThemeRepoImpl>();
   final themeCubit = ThemeCubit(themeRepo);
   await themeCubit.getTheme();
   runApp(
@@ -44,13 +45,12 @@ class NeuraChat extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LanguageCubit(
-            languageRepoImpl: LanguageRepoImpl(),
+            languageRepoImpl: getIt.get<LanguageRepoImpl>(),
           )..getAppLanguage(context: context),
         ),
-     
         BlocProvider(
           create: (context) => FastActionsBloc(
-            homeRepoImpl: HomeRepoImpl(),
+            homeRepoImpl: getIt.get<HomeRepoImpl>(),
           )..add(
               FetchFastActionsBlocEvent(
                 currenLanguage:

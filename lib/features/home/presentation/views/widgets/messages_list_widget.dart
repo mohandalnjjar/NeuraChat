@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/chat_message_widget.dart';
 
 class MessagesListWidget extends StatefulWidget {
   const MessagesListWidget({
     super.key,
+    this.savedChats,
   });
 
   @override
   State<MessagesListWidget> createState() => _MessagesListWidgetState();
+  final List<Message>? savedChats;
 }
 
 class _MessagesListWidgetState extends State<MessagesListWidget> {
@@ -48,6 +51,18 @@ class _MessagesListWidgetState extends State<MessagesListWidget> {
               itemBuilder: (context, index) {
                 return ChatMessageWidget(
                   message: state.messagesList[index],
+                );
+              },
+            ),
+          );
+        } else if (widget.savedChats != null) {
+          return Expanded(
+            child: ListView.builder(
+              controller: _controller,
+              itemCount: widget.savedChats!.length,
+              itemBuilder: (context, index) {
+                return ChatMessageWidget(
+                  message: widget.savedChats![index],
                 );
               },
             ),

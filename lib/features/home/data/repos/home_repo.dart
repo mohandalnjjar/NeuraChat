@@ -16,11 +16,13 @@ abstract class HomeRepo {
     required ChatMessageModel chatMessageModel,
   });
 
-  Stream<Either<Failures, List<Message>>> fetchStreamMessages({
+  Stream<Either<Failures, List<Message>>> fetchMessages({
     required String chatId,
   });
 
   Future<Either<Failures, void>> updateUserDetails({
     required String? name,
   });
+
+  Stream<Either<Failures, List<SavedChatModel>>> fetchSavedChats();
 }

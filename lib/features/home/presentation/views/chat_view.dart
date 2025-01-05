@@ -19,12 +19,12 @@ class ChatView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => SendMessageCubit(
-            homeRepoImpl:getIt.get<HomeRepoImpl>(),
+            homeRepoImpl: getIt.get<HomeRepoImpl>(),
           ),
         ),
         BlocProvider(
           create: (context) => GetMessagesBloc(
-            homeRepoImpl:getIt.get<HomeRepoImpl>(),
+            homeRepoImpl: getIt.get<HomeRepoImpl>(),
           ),
         ),
       ],
@@ -35,6 +35,7 @@ class ChatView extends StatelessWidget {
         ),
         body: ChatViewBody(
           initialValue: initialValue,
+          savedChats: savedChats,
         ),
       ),
     );

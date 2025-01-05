@@ -45,6 +45,12 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);
     });
+    if (widget.chatId != null) {
+      BlocProvider.of<GetMessagesBloc>(context).add(
+        FetchMessagesEvent(chatId: widget.chatId!),
+      );
+      fetched = true;
+    }
     controller.text = widget.initialValue ?? "";
     isEmpty = controller.text.trim().isEmpty;
   }

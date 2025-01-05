@@ -22,7 +22,7 @@ class SavedChatsList extends StatelessWidget {
             },
           );
         } else {
-          return const SizedBox();
+          return const Text('handel el error ya beh');
         }
       },
     );

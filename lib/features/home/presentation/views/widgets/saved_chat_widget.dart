@@ -54,7 +54,7 @@ class SavedChatWidget extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        savedChatModel.messages.first.messageId,
+                        savedChatModel.messages[1].content,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyles.styleRegularGrey16(context),

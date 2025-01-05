@@ -13,7 +13,13 @@ class AutomationDialogListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRoutes.kChatView, extra: prompt);
+        GoRouter.of(context).push(
+          AppRoutes.kChatView,
+          extra: {
+            'savedChats': null,
+            'initialValue': prompt,
+          },
+        );
         context.pop();
       },
       child: Padding(

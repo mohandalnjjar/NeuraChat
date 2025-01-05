@@ -276,6 +276,7 @@ class HomeRepoImpl extends HomeRepo {
           .collection('users')
           .doc(user!.uid)
           .collection('chats')
+          .orderBy('createdAt', descending: true)
           .snapshots()) {
         List<SavedChatModel> currentChats = snapshot.docs.map(
           (doc) {

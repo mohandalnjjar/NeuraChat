@@ -28,9 +28,10 @@ class FastActionsListView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return FastActionsWidget(
                         fastActionModel: FastActionModel(
-                            name: "name",
-                            description: "description",
-                            fastActionsList: []),
+                          name: "name",
+                          description: "description",
+                          fastActionsList: [],
+                        ),
                       );
                     },
                   ),
@@ -70,7 +71,7 @@ class FastActionsListView extends StatelessWidget {
         } else if (state is FetchFastActionsBlocFailed) {
           return Text(state.errorMessage);
         } else {
-          return const Text("Check You internet connections");
+          return const SizedBox();
         }
       },
     );

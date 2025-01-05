@@ -15,9 +15,9 @@ class SendMessageCubit extends Cubit<SendMessageState> {
     emit(
       MessageLoading(),
     );
-    await homeRepoImpl.uploadMessageToFirebase(
-      chatMessageModel: chatMessageModel,
-    );
+    // await homeRepoImpl.uploadMessageToFirebase(
+    //   chatMessageModel: chatMessageModel,
+    // );
 
     final result = await homeRepoImpl.sendMessage(
       userMessage: chatMessageModel.message.content,
@@ -32,16 +32,16 @@ class SendMessageCubit extends Cubit<SendMessageState> {
         );
       },
       (messageModel) async {
-        await homeRepoImpl.uploadMessageToFirebase(
-          chatMessageModel: ChatMessageModel(
-            chatId: chatMessageModel.chatId,
-            createdAt: chatMessageModel.createdAt,
-            message: Message(
-              isUser: false,
-              content: messageModel.message,
-            ),
-          ),
-        );
+        // await homeRepoImpl.uploadMessageToFirebase(
+        //   chatMessageModel: ChatMessageModel(
+        //     chatId: chatMessageModel.chatId,
+        //     createdAt: chatMessageModel.createdAt,
+        //     message: Message(
+        //       isUser: false,
+        //       content: messageModel.message,
+        //     ),
+        //   ),
+        // );
         emit(
           MessageSentSuccess(),
         );

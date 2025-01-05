@@ -18,20 +18,20 @@ import 'package:neura_chat/generated/l10n.dart';
 import 'package:neura_chat/firebase_options.dart';
 
 void main(List<String> args) async {
-  setupServiceLocator();
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'Neura Chat',
   );
+
+  setupServiceLocator();
+
   //ThemeCubit
-  final themeRepo = getIt.get<ThemeRepoImpl>();
-  final themeCubit = ThemeCubit(themeRepo);
+  final themeCubit = ThemeCubit(getIt.get<ThemeRepoImpl>());
   await themeCubit.getTheme();
   //CheckAuthBloc
-  final authRepoImpl = getIt.get<AuthRepoImpl>();
-  final authBloc = CheckAuthStateBloc(authRepoImpl: authRepoImpl);
+  final authBloc = CheckAuthStateBloc(authRepoImpl: getIt.get<AuthRepoImpl>());
   authBloc.add(PerformCheckAuthEvent());
 
   runApp(

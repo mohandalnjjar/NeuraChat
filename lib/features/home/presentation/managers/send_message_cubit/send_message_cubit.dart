@@ -6,6 +6,7 @@ import 'package:neura_chat/features/home/presentation/managers/send_message_cubi
 
 class SendMessageCubit extends Cubit<SendMessageState> {
   final HomeRepoImpl homeRepoImpl;
+  final List<Message> messages = [];
 
   SendMessageCubit({required this.homeRepoImpl}) : super(MessageInitial());
 
@@ -13,11 +14,10 @@ class SendMessageCubit extends Cubit<SendMessageState> {
     required ChatMessageModel chatMessageModel,
   }) async {
     emit(
-      MessageLoading(),
+      MessageSentLoading(),
     );
-    // await homeRepoImpl.uploadMessageToFirebase(
-    //   chatMessageModel: chatMessageModel,
-    // );
+
+    messages.add(chatMessageModel.message);
 
     final result = await homeRepoImpl.sendMessage(
       userMessage: chatMessageModel.message.content,
@@ -32,18 +32,13 @@ class SendMessageCubit extends Cubit<SendMessageState> {
         );
       },
       (messageModel) async {
-        // await homeRepoImpl.uploadMessageToFirebase(
-        //   chatMessageModel: ChatMessageModel(
-        //     chatId: chatMessageModel.chatId,
-        //     createdAt: chatMessageModel.createdAt,
-        //     message: Message(
-        //       isUser: false,
-        //       content: messageModel.message,
-        //     ),
-        //   ),
-        // );
+        messages.add(Message(
+          isUser: false,
+          content: messageModel.message,
+        ));
+        //i will handle for just send the new messages not the entire list
         emit(
-          MessageSentSuccess(),
+          MessageSentSuccess(messages: messages),
         );
       },
     );

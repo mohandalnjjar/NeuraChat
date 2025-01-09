@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -15,7 +14,7 @@ class NeuraLoadingOrb extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SendMessageCubit, SendMessageState>(
       builder: (context, state) {
-        if (state is MessageLoading) {
+        if (state is MessageSentLoading) {
           return Lottie.asset(Assets.imagesLottieYaHabibi, height: 78);
         } else {
           return const SizedBox();

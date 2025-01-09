@@ -40,10 +40,10 @@ class HomeRepoImpl extends HomeRepo {
       if (messageHistory.isEmpty) {
         messageHistory.add(
           {
-            "role": "user",
+            "role": "developer",
             "parts": [
               {"text": "My Details:\n${customInstructions.toString()}"},
-              {"text": "Your name is Neura"},
+              {"text": "if the user ask about your name answer with Neura"},
             ],
           },
         );

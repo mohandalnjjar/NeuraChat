@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/widgets/my_icon_button.dart';
-import 'package:neura_chat/features/home/presentation/views/widgets/clear_chat_bloc_button.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/more_chat_bloc_button.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
 class ChatViewAppBar extends StatelessWidget {
@@ -28,7 +28,7 @@ class ChatViewAppBar extends StatelessWidget {
           style: AppStyles.styleSemiBold24(context),
         ),
         actions: const [
-          ClearChatBlocButton(),
+          MoreChatButton(),
         ],
       ),
     );

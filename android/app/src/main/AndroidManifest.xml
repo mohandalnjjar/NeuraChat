@@ -3,6 +3,13 @@
         android:label="Neura"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+
+          <!-- Disable Impeller -->
+        <meta-data
+            android:name="io.flutter.embedding.android.EnableImpeller"
+            android:value="false" />
+
+
         <activity
             android:enableOnBackInvokedCallback="true"
             android:name=".MainActivity"

@@ -18,6 +18,9 @@ class MyIconButton extends StatelessWidget {
     return IconButton(
       onPressed: onPressed,
       icon: CircleAvatar(
+        foregroundColor: BlocProvider.of<ThemeCubit>(context).getThemeMode
+            ? AppPalette.kwhitModeMessageColor
+            : AppPalette.kSecondaryDarkColor,
         backgroundColor: BlocProvider.of<ThemeCubit>(context).getThemeMode
             ? AppPalette.kSecondaryDarkColor
             : AppPalette.kwhitModeMessageColor,

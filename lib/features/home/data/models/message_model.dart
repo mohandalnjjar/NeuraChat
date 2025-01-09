@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
 
 class MessageModel {
   final String message;
@@ -21,27 +20,21 @@ class MessageModel {
 class Message {
   final bool isUser;
   final String content;
-  final String messageId;
 
   Message({
-    String? messageId,
     required this.isUser,
     required this.content,
-  }) : messageId = messageId ?? const Uuid().v4();
+  });
 
   Map<String, dynamic> toMap() {
     return {
       'isUser': isUser,
       'content': content,
-      'messageId': messageId,
     };
   }
 
   factory Message.fromFireStore(Map<String, dynamic> jsonData) {
-    return Message(
-        isUser: jsonData['isUser'],
-        content: jsonData['content'],
-        messageId: jsonData['messageId']);
+    return Message(isUser: jsonData['isUser'], content: jsonData['content'],);
   }
 }
 

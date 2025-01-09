@@ -41,32 +41,29 @@ class FastActionsListView extends StatelessWidget {
           );
         }
         if (state is FetchFastActionsBlocSuccess) {
-          return Skeletonizer(
-            enabled: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: AppPadding.globalPadding,
-                  child: Text(
-                    "generate",
-                    style: AppStyles.styleGreyReg16(context),
-                  ),
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: AppPadding.globalPadding,
+                child: Text(
+                  "generate",
+                  style: AppStyles.styleGreyReg16(context),
                 ),
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * .22,
-                  child: ListView.builder(
-                    itemCount: state.fastActions.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return FastActionsWidget(
-                        fastActionModel: state.fastActions[index],
-                      );
-                    },
-                  ),
+              ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * .22,
+                child: ListView.builder(
+                  itemCount: state.fastActions.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return FastActionsWidget(
+                      fastActionModel: state.fastActions[index],
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         } else if (state is FetchFastActionsBlocFailed) {
           return Text(state.errorMessage);

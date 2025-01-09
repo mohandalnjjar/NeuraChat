@@ -5,7 +5,7 @@ import 'package:neura_chat/features/home/presentation/views/widgets/neura_loadin
 import 'package:neura_chat/features/home/presentation/views/widgets/send_message_widget.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-class ChatViewBody extends StatelessWidget {
+class ChatViewBody extends StatefulWidget {
   const ChatViewBody({
     super.key,
     this.initialValue,
@@ -16,6 +16,11 @@ class ChatViewBody extends StatelessWidget {
   final SavedChatModel? savedChats;
 
   @override
+  State<ChatViewBody> createState() => _ChatViewBodyState();
+}
+
+class _ChatViewBodyState extends State<ChatViewBody> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -23,8 +28,8 @@ class ChatViewBody extends StatelessWidget {
         const MessagesListWidget(),
         const NeuraLoadingOrb(),
         SendMessageWidget(
-          chatId: savedChats?.chatId,
-          initialValue: initialValue,
+          chatId: widget.savedChats?.chatId,
+          initialValue: widget.initialValue,
           hintText: S.of(context).AskAnyQuestion,
         ),
       ],

@@ -1,16 +1,9 @@
-# neura_chat
+# Neura Chat Ai App
 
-A new Flutter project.
+# App Screen Shots
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Home Page
+![Screenshot_1736172813](https://github.com/user-attachments/assets/c43eee80-223d-45c2-b10a-e7eec42923f5)
+# App Drawer
+![Screenshot_1736173060](https://github.com/user-attachments/assets/45080341-cca1-4a9b-ad1f-968d691f05eb)

@@ -9,4 +9,8 @@ final class LogOutBlocLoading extends LogOutBlocState {}
 
 final class LogOutBlocSuccess extends LogOutBlocState {}
 
-final class LogOutBlocFailed extends LogOutBlocState {}
+final class LogOutBlocFailed extends LogOutBlocState {
+  final String errorMessage;
+
+  LogOutBlocFailed({required this.errorMessage});
+}

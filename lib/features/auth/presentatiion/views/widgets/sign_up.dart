@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/app_routes.dart';
+
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/utils/functions/validators.dart';
 import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
@@ -14,16 +15,16 @@ import 'package:neura_chat/features/auth/presentatiion/views/widgets/continue_wi
 import 'package:neura_chat/features/auth/presentatiion/views/widgets/or_widget.dart';
 import 'package:neura_chat/generated/l10n.dart';
 
-class SignUPForm extends StatefulWidget {
-  const SignUPForm({
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({
     super.key,
   });
 
   @override
-  State<SignUPForm> createState() => _SignUPFormState();
+  State<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignUPFormState extends State<SignUPForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final _nameControler = TextEditingController();
@@ -44,17 +45,21 @@ class _SignUPFormState extends State<SignUPForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<GoogleLoginCubit, GoogleLoginState>(
       listener: (context, state) {
-        showDialog(
-          context: context,
-          builder: (context) => const LoadingIndicator(
-            absorbing: true,
-          ),
-        );
+        if (state is GoogleLoginLoading) {
+          showDialog(
+            context: context,
+            builder: (context) => const LoadingIndicator(
+              absorbing: true,
+            ),
+          );
+        }
         if (state is GoogleLoginFailed) {
           popUpAlert(context: context, message: state.errorMessage);
-        } else {
-          GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
+          Navigator.of(context).pop();
+        }
 
+        if (state is GoogleLoginDone) {
+          GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
           popUpAlert(context: context, message: 'Done');
         }
       },

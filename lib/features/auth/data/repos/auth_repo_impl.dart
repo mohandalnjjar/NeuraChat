@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
-import 'package:neura_chat/core/utils/functions/check_internet_connectivity.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo {
@@ -15,17 +14,6 @@ class AuthRepoImpl extends AuthRepo {
     required String password,
   }) async {
     try {
-      bool isConnected = await checkInternetConnection();
-
-      if (!isConnected) {
-        return left(
-          FirebaseAuthExcep(
-            errorMessage:
-                "No internet connection. Please check your network settings.",
-          ),
-        );
-      }
-
       await auth.signInWithEmailAndPassword(email: email, password: password);
       return right(null);
     } catch (e) {
@@ -50,15 +38,6 @@ class AuthRepoImpl extends AuthRepo {
     required String name,
   }) async {
     try {
-      bool isConnected = await checkInternetConnection();
-      if (!isConnected) {
-        return left(
-          FirebaseAuthExcep(
-            errorMessage:
-                "No internet connection. Please check your network settings.",
-          ),
-        );
-      }
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -109,17 +88,6 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<Failures, void>> googleLogin() async {
     try {
-      //Check internet connectivity befre starting
-      bool isConnected = await checkInternetConnection();
-      if (!isConnected) {
-        return left(
-          FirebaseAuthExcep(
-            errorMessage:
-                "No internet connection. Please check your network settings.",
-          ),
-        );
-      }
-
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
       if (gUser == null) {
         return left(
@@ -211,7 +179,6 @@ class AuthRepoImpl extends AuthRepo {
         await user.delete();
       }
       await auth.signOut();
-
       return right(null);
     } catch (e) {
       return left(

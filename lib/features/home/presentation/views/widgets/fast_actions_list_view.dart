@@ -66,7 +66,7 @@ class FastActionsListView extends StatelessWidget {
             ],
           );
         } else if (state is FetchFastActionsBlocFailed) {
-          return Text(state.errorMessage);
+          return const SizedBox();
         } else {
           return const SizedBox();
         }

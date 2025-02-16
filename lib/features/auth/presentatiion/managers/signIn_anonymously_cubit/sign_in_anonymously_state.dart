@@ -9,4 +9,8 @@ final class SignInAnonymouslyLoading extends SignInAnonymouslyState {}
 
 final class SignInAnonymouslySuccess extends SignInAnonymouslyState {}
 
-final class SignInAnonymouslyFailed extends SignInAnonymouslyState {}
+final class SignInAnonymouslyFailed extends SignInAnonymouslyState {
+  final String errorMessage;
+
+  SignInAnonymouslyFailed({required this.errorMessage});
+}

@@ -6,6 +6,7 @@ import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/services/api_services.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/data/models/save_chat_model.dart';
 import 'package:neura_chat/features/home/data/models/user_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo.dart';
 import 'package:uuid/uuid.dart';
@@ -14,6 +15,7 @@ class HomeRepoImpl extends HomeRepo {
   final ApiServices apiServices = ApiServices();
   final Uuid uuid = const Uuid();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final List<Map<String, dynamic>> messageHistory = [];
 
@@ -22,28 +24,22 @@ class HomeRepoImpl extends HomeRepo {
     required String userMessage,
   }) async {
     final User? user = auth.currentUser;
-    if (user == null) {
-      return left(
-        ServerFailure(errorMessage: 'User not authenticated.'),
-      );
-    }
+
     try {
       final DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
+          .doc(user!.uid)
           .get();
-
       final Map<String, dynamic> customInstructions =
           (userDoc.data() as Map<String, dynamic>?)?['customInstructions'] ??
               {};
-
       if (messageHistory.isEmpty) {
         messageHistory.add(
           {
-            "role": "developer",
+            "role": "user",
             "parts": [
               {"text": "My Details:\n${customInstructions.toString()}"},
-              {"text": "if the user ask about your name answer with Neura"},
+              {"text": "when user ask about your name response with Neura"},
             ],
           },
         );
@@ -78,6 +74,7 @@ class HomeRepoImpl extends HomeRepo {
           ],
         },
       );
+
       return right(
         MessageModel.fromJson(
           jsonData: response.data,
@@ -101,77 +98,47 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Future<Either<Failures, void>> uploadMessageToFirebase({
-    required ChatMessageModel chatMessageModel,
+  Future<Either<Failures, void>> saveChat({
+    required List<Message> messages,
   }) async {
     try {
       final User? user = auth.currentUser;
       final chatRef = FirebaseFirestore.instance
           .collection('users')
           .doc(user?.uid)
-          .collection('chats')
-          .doc(chatMessageModel.chatId);
+          .collection('SavedChats')
+          .doc(uuid.v4());
 
       final docSnapshot = await chatRef.get();
+      final List<Map<String, dynamic>> messagesMap = messages
+          .map(
+            (message) => message.toMap(),
+          )
+          .toList();
 
       if (docSnapshot.exists) {
         await chatRef.update(
           {
             'messages': FieldValue.arrayUnion(
               [
-                chatMessageModel.message.toMap(),
+                messagesMap,
               ],
             )
           },
         );
       } else {
         await chatRef.set(
-          chatMessageModel.toMap(),
+          {
+            'SavedAt': Timestamp.now(),
+            'ChatId': chatRef.id,
+            'messages': messagesMap,
+          },
         );
       }
 
       return right(null);
     } catch (e) {
       return left(
-        ServerFailure(
-          errorMessage: e.toString(),
-        ),
-      );
-    }
-  }
-
-  @override
-  Stream<Either<Failures, List<Message>>> fetchMessages({
-    required String chatId,
-  }) async* {
-    try {
-      final User? user = auth.currentUser;
-      List<Message> previousMessages = [];
-      await for (final snapshot in FirebaseFirestore.instance
-          .collection('users')
-          .doc(user!.uid)
-          .collection('chats')
-          .doc(chatId)
-          .snapshots()) {
-        final data = snapshot.data();
-        final messages = data?['messages'] as List<dynamic>?;
-
-        if (messages != null) {
-          final messagesList = messages.map((message) {
-            return Message.fromFireStore(message);
-          }).toList();
-          final newMessages = messagesList
-              .where(
-                (message) => !previousMessages.contains(message),
-              )
-              .toList();
-
-          yield right(newMessages);
-          previousMessages = messagesList;
-        }
-      }
-    } catch (e) {
-      yield left(
         ServerFailure(
           errorMessage: e.toString(),
         ),
@@ -200,7 +167,7 @@ class HomeRepoImpl extends HomeRepo {
       return right(allFastActions);
     } catch (e) {
       return left(
-        ServerFailure(
+        FirebaseAuthExcep(
           errorMessage: e.toString(),
         ),
       );
@@ -267,42 +234,77 @@ class HomeRepoImpl extends HomeRepo {
   }
 
   @override
-  Stream<Either<Failures, List<SavedChatModel>>> fetchSavedChats() async* {
+  Future<Either<Failures, List<SavedChatModel>>>
+      fetchInitialSavedChats() async {
     try {
       User? user = auth.currentUser;
-      List<SavedChatModel> previousChats = [];
 
-      await for (final snapshot in FirebaseFirestore.instance
+      final querySnapshot = await firestore
           .collection('users')
           .doc(user!.uid)
-          .collection('chats')
-          .orderBy('createdAt', descending: true)
-          .snapshots()) {
-        List<SavedChatModel> currentChats = snapshot.docs.map(
-          (doc) {
-            return SavedChatModel.fromFirestore(doc);
-          },
-        ).toList();
-        // Find new chats
-        List<SavedChatModel> newChats = currentChats.where(
-          (newChat) {
-            return !previousChats.any(
-              (oldChat) {
-                return oldChat.chatId == newChat.chatId;
-              },
-            );
-          },
-        ).toList();
+          .collection('SavedChats')
+          .orderBy('SavedAt', descending: true)
+          .limit(5)
+          .get();
 
-        if (newChats.isNotEmpty) {
-          yield Right(newChats);
-        } else {
-          yield const Right([]);
-        }
-        previousChats = currentChats;
-      }
+      final chats = querySnapshot.docs.map((chat) {
+        return SavedChatModel.fromFirestore(chat);
+      }).toList();
+
+      return right(chats);
     } catch (e) {
-      yield left(
+      return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, List<SavedChatModel>>> fetchMoreSavedChats(
+      SavedChatModel lastMessage) async {
+    try {
+      User? user = auth.currentUser;
+
+      final querySnapshot = await firestore
+          .doc(user!.uid)
+          .collection('SavedChats')
+          // .orderBy('SavedAt', descending: true)
+          // .startAfter([lastMessage.savedAt])
+          .limit(20)
+          .get();
+
+      final chats = querySnapshot.docs.map((chat) {
+        return SavedChatModel.fromFirestore(chat);
+      }).toList();
+
+      return right(chats);
+    } catch (e) {
+      return left(
+        ServerFailure(
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failures, void>> deletSavedChat({
+    required String chatId,
+  }) async {
+    try {
+      User? user = auth.currentUser;
+
+      await firestore
+          .collection('users')
+          .doc(user!.uid)
+          .collection('SavedChats')
+          .doc(chatId)
+          .delete();
+      return right(null);
+    } catch (e) {
+      return left(
         ServerFailure(
           errorMessage: e.toString(),
         ),

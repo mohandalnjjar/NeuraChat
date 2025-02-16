@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/data/models/save_chat_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo.dart';
 
 part 'fetch_saved_chats_event.dart';
@@ -11,26 +11,37 @@ class FetchSavedChatsBloc
   final HomeRepo homeRepo;
   FetchSavedChatsBloc(this.homeRepo) : super(FetchSavedChatsInitial()) {
     on<FetchSavedChatsEvent>((event, emit) async {
-      emit(
-        FetchSavedChatsLoading(),
-      );
-      if (event is PerformFetchSavedChatsEvent) {
-        await for (final response in homeRepo.fetchSavedChats()) {
-          response.fold(
-            (failed) {
-              emit(
-                FetchSavedChatsFailed(
-                  errorMessage: failed.errorMessage,
-                ),
-              );
-            },
-            (success) {
-              emit(
-                FetchSavedChatsSuccess(savedChats: success),
-              );
-            },
-          );
-        }
+      if (event is FetchIntialSavedChatsEvent) {
+        emit(
+          FetchSavedChatsLoading(),
+        );
+        var response = await homeRepo.fetchInitialSavedChats();
+        response.fold(
+          (failed) {
+            emit(
+              FetchSavedChatsFailed(errorMessage: failed.errorMessage),
+            );
+          },
+          (success) {
+            emit(
+              FetchSavedChatsSuccess(savedChats: success),
+            );
+          },
+        );
+      } else if (event is FetchSavedMoreChatsEvent) {
+        var response = await homeRepo.fetchMoreSavedChats(event.lastMessagel);
+        response.fold(
+          (failed) {
+            emit(
+              FetchSavedChatsFailed(errorMessage: failed.errorMessage),
+            );
+          },
+          (success) {
+            emit(
+              FetchSavedChatsSuccess(savedChats: success),
+            );
+          },
+        );
       }
     });
   }

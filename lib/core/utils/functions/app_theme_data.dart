@@ -5,7 +5,6 @@ import 'package:neura_chat/core/constants/text_styles.dart';
 
 ThemeData appThemeData({required bool isDark, required BuildContext context}) {
   return ThemeData(
-    
     progressIndicatorTheme:
         ProgressIndicatorThemeData(color: isDark ? Colors.white : Colors.black),
     listTileTheme: ListTileThemeData(

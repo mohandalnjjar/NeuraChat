@@ -3,6 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/display_message_dialog.dart';
 
 class AiChatMessageWidget extends StatelessWidget {
   const AiChatMessageWidget({
@@ -16,11 +17,9 @@ class AiChatMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: AppPadding.globalPadding,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      child: InkWell(
+        onLongPress: () => displayMessageDialog(context, message.content),
+        child: Row(children: [
           Flexible(
             child: Container(
               padding: const EdgeInsets.all(8.0),
@@ -35,7 +34,7 @@ class AiChatMessageWidget extends StatelessWidget {
               ),
             ),
           ),
-        ],
+        ]),
       ),
     );
   }

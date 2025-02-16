@@ -25,12 +25,10 @@ class SignInAnonymouslyButton extends StatelessWidget {
             ),
           );
         } else if (state is SignInAnonymouslySuccess) {
-          Navigator.of(context).pop();
           GoRouter.of(context).pushReplacement(AppRoutes.kWelcomView);
           popUpAlert(context: context, message: S.of(context).Success);
         } else if (state is SignInAnonymouslyFailed) {
-          Navigator.of(context).pop();
-          popUpAlert(context: context, message: S.of(context).Failed);
+          popUpAlert(context: context, message: state.errorMessage);
           Navigator.of(context).pop();
         }
       },

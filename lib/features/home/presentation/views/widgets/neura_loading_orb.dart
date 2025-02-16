@@ -15,7 +15,7 @@ class NeuraLoadingOrb extends StatelessWidget {
     return BlocBuilder<SendMessageCubit, SendMessageState>(
       builder: (context, state) {
         if (state is MessageSentLoading) {
-          return Lottie.asset(Assets.imagesLottieYaHabibi, height: 78);
+          return Lottie.asset(Assets.imagesNeuraOrb, height: 78);
         } else {
           return const SizedBox();
         }

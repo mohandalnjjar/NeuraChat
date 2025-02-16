@@ -11,16 +11,23 @@ class SendMessageCubit extends Cubit<SendMessageState> {
   SendMessageCubit({required this.homeRepoImpl}) : super(MessageInitial());
 
   Future<void> sendMessage({
-    required ChatMessageModel chatMessageModel,
+    required Message message,
   }) async {
+    if (messages.isNotEmpty && messages.last.content == message.content) {
+      messages.removeLast();
+    }
+    messages.add(message);
+
+    emit(
+      MessageSentSuccess(messages: messages),
+    );
+
     emit(
       MessageSentLoading(),
     );
 
-    messages.add(chatMessageModel.message);
-
     final result = await homeRepoImpl.sendMessage(
-      userMessage: chatMessageModel.message.content,
+      userMessage: message.content,
     );
 
     result.fold(
@@ -28,15 +35,17 @@ class SendMessageCubit extends Cubit<SendMessageState> {
         emit(
           MessageSentFailure(
             errorMessage: failure.toString(),
+            lastMessage: message,
           ),
         );
       },
       (messageModel) async {
-        messages.add(Message(
-          isUser: false,
-          content: messageModel.message,
-        ));
-        //i will handle for just send the new messages not the entire list
+        messages.add(
+          Message(
+            isUser: false,
+            content: messageModel.message,
+          ),
+        );
         emit(
           MessageSentSuccess(messages: messages),
         );

@@ -5,7 +5,7 @@ import 'package:neura_chat/features/auth/presentatiion/views/check_auth_status_v
 import 'package:neura_chat/features/auth/presentatiion/views/forgot_password_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/login_view.dart';
 import 'package:neura_chat/features/auth/presentatiion/views/sign_up.dart';
-import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/data/models/save_chat_model.dart';
 import 'package:neura_chat/features/home/presentation/views/chat_view.dart';
 import 'package:neura_chat/features/home/presentation/views/details_genius_mode_view.dart';
 import 'package:neura_chat/features/home/presentation/views/genius_mode_view.dart';

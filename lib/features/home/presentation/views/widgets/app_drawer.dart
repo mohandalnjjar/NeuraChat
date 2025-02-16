@@ -7,6 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:neura_chat/core/constants/app_routes.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/core/services/internet_connectivity.dart';
+import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/log_out_bloc/log_out_bloc_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/app_bar_item_widget.dart';
@@ -22,7 +24,8 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LogOutBloc(
-        authRepoImpl: AuthRepoImpl(),
+        authRepoImpl: getIt.get<AuthRepoImpl>(),
+        internetConnectivity: getIt.get<InternetConnectivity>(),
       ),
       child: SafeArea(
         child: Drawer(

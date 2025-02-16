@@ -41,7 +41,7 @@ class MobileRegisterViewLayotu extends StatelessWidget {
                 Navigator.of(context).pop();
               }
             },
-            child: const SignUPForm(),
+            child: const SignUpForm(),
           ),
         ),
       ),

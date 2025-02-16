@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neura_chat/core/services/internet_connectivity.dart';
 import 'package:neura_chat/core/utils/service_locator.dart';
-import 'package:neura_chat/features/home/data/models/message_model.dart';
+import 'package:neura_chat/features/home/data/models/save_chat_model.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
-import 'package:neura_chat/features/home/presentation/managers/get_messages_bloc/get_messages_bloc.dart';
+import 'package:neura_chat/features/home/presentation/managers/save_chat_bloc/save_chat_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/send_message_cubit/send_message_cubit.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/chat_view_body.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/chat_view_my_app_bar.dart';
@@ -23,8 +24,9 @@ class ChatView extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => GetMessagesBloc(
-            homeRepoImpl: getIt.get<HomeRepoImpl>(),
+          create: (context) => SaveChatBloc(
+            homeRepo: getIt.get<HomeRepoImpl>(),
+            internetConnectivity: getIt.get<InternetConnectivity>(),
           ),
         ),
       ],

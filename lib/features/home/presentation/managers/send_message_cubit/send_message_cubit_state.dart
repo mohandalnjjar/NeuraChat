@@ -14,6 +14,10 @@ class MessageSentSuccess extends SendMessageState {
 
 class MessageSentFailure extends SendMessageState {
   final String errorMessage;
+  final Message? lastMessage;
 
-  MessageSentFailure({required this.errorMessage});
+  MessageSentFailure({
+    required this.errorMessage,
+    this.lastMessage,
+  });
 }

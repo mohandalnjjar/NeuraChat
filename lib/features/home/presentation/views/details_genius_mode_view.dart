@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/text_styles.dart';
+import 'package:neura_chat/core/services/internet_connectivity.dart';
 import 'package:neura_chat/core/utils/genius_mode_enum.dart';
 import 'package:neura_chat/core/utils/service_locator.dart';
+import 'package:neura_chat/core/utils/widgets/alert_pop_up.dart';
 import 'package:neura_chat/features/home/data/repos/home_repo_impl.dart';
 import 'package:neura_chat/features/home/presentation/managers/fetch_user_data_bloc/fetch_user_data_bloc.dart';
 import 'package:neura_chat/features/home/presentation/managers/update_user_data_bloc/update_user_data_bloc.dart';
@@ -52,90 +54,99 @@ class _DetailsGeniusModeViewState extends State<DetailsGeniusModeView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => UpdateUserDataBloc(
-getIt.get<HomeRepoImpl>()      ),
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(80),
-          child: DetailsGeniusModeAppBar(
-            isContentChanged: isContentChanged,
+        homeRepoImpl: getIt.get<HomeRepoImpl>(),
+        internetConnectivity: getIt.get<InternetConnectivity>(),
+      ),
+      child: BlocListener<UpdateUserDataBloc, UpdateUserDataState>(
+        listener: (context, state) {
+          if (state is UpdateUserDataFailed) {
+            popUpAlert(context: context, message: state.errorMessage);
+          }
+        },
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(80),
+            child: DetailsGeniusModeAppBar(
+              isContentChanged: isContentChanged,
+              controller: controller,
+              geniusMode: widget.geniusMode,
+            ),
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: AppPadding.globalPadding,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      widget.headTitle,
+                      style: AppStyles.styleSemiBold23(context),
+                    ),
+                  ),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: BlocBuilder<FetchUserDataBloc, FetchUserDataState>(
+                        builder: (context, state) {
+                          if (state is FetchUserDataSuccess) {
+                            return TextFormField(
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    isContentChanged = true;
+                                  },
+                                );
+                              },
+                              controller: controller,
+                              autofocus: true,
+                              maxLines: null,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1500),
+                              ],
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                fillColor: Colors.transparent,
+                                filled: true,
+                              ),
+                              style: AppStyles.styleSemiBold17(context),
+                            );
+                          } else {
+                            return TextFormField(
+                              onChanged: (value) {
+                                setState(
+                                  () {
+                                    isContentChanged = true;
+                                  },
+                                );
+                              },
+                              controller: controller,
+                              autofocus: true,
+                              maxLines: null,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(1500),
+                              ],
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                border: InputBorder.none,
+                                fillColor: Colors.transparent,
+                                filled: true,
+                              ),
+                              style: AppStyles.styleSemiBold17(context),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          bottomSheet: DetailsGeniusModeBottomSheet(
             controller: controller,
             geniusMode: widget.geniusMode,
           ),
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: AppPadding.globalPadding,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    widget.headTitle,
-                    style: AppStyles.styleSemiBold23(context),
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: BlocBuilder<FetchUserDataBloc, FetchUserDataState>(
-                      builder: (context, state) {
-                        if (state is FetchUserDataSuccess) {
-                          return TextFormField(
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  isContentChanged = true;
-                                },
-                              );
-                            },
-                            controller: controller,
-                            autofocus: true,
-                            maxLines: null,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1500),
-                            ],
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              border: InputBorder.none,
-                              fillColor: Colors.transparent,
-                              filled: true,
-                            ),
-                            style: AppStyles.styleSemiBold17(context),
-                          );
-                        } else {
-                          return TextFormField(
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  isContentChanged = true;
-                                },
-                              );
-                            },
-                            controller: controller,
-                            autofocus: true,
-                            maxLines: null,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1500),
-                            ],
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              border: InputBorder.none,
-                              fillColor: Colors.transparent,
-                              filled: true,
-                            ),
-                            style: AppStyles.styleSemiBold17(context),
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        bottomSheet: DetailsGeniusModeBottomSheet(
-          controller: controller,
-          geniusMode: widget.geniusMode,
         ),
       ),
     );

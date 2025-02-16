@@ -103,9 +103,13 @@ class HomeRepoImpl extends HomeRepo {
   }) async {
     try {
       final User? user = auth.currentUser;
+
+      if (user == null || user.isAnonymous) {
+        return right(null);
+      }
       final chatRef = FirebaseFirestore.instance
           .collection('users')
-          .doc(user?.uid)
+          .doc(user.uid)
           .collection('SavedChats')
           .doc(uuid.v4());
 
@@ -178,10 +182,13 @@ class HomeRepoImpl extends HomeRepo {
   Stream<Either<Failures, UserModel>> fetchUserData() async* {
     try {
       User? user = auth.currentUser;
+      if (user == null || user.isAnonymous) {
+        return;
+      }
 
       await for (final snapshot in FirebaseFirestore.instance
           .collection('users')
-          .doc(user!.uid)
+          .doc(user.uid)
           .snapshots()) {
         yield right(
           UserModel.fromFireBase(
@@ -207,6 +214,9 @@ class HomeRepoImpl extends HomeRepo {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     try {
+      if (user == null || user.isAnonymous) {
+        return right(null);
+      }
       final Map<String, dynamic> updateData = {};
       if (name != null) updateData['name'] = name;
 
@@ -220,7 +230,7 @@ class HomeRepoImpl extends HomeRepo {
       if (updateData.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(user!.uid)
+            .doc(user.uid)
             .update(updateData);
       }
       return right(null);
@@ -239,9 +249,13 @@ class HomeRepoImpl extends HomeRepo {
     try {
       User? user = auth.currentUser;
 
+      if (user == null || user.isAnonymous) {
+        return right([]);
+      }
+
       final querySnapshot = await firestore
           .collection('users')
-          .doc(user!.uid)
+          .doc(user.uid)
           .collection('SavedChats')
           .orderBy('SavedAt', descending: true)
           .limit(5)

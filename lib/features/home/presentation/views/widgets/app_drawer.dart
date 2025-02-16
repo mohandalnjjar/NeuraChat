@@ -6,13 +6,14 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:neura_chat/core/constants/app_routes.dart';
-import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/core/services/internet_connectivity.dart';
 import 'package:neura_chat/core/utils/service_locator.dart';
 import 'package:neura_chat/features/auth/data/repos/auth_repo_impl.dart';
+import 'package:neura_chat/features/auth/presentatiion/managers/check_auth_state_bloc/check_auth_state_bloc.dart';
 import 'package:neura_chat/features/auth/presentatiion/managers/log_out_bloc/log_out_bloc_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/app_bar_item_widget.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/app_theme_dialog.dart';
+import 'package:neura_chat/features/home/presentation/views/widgets/login&out_bloc_button.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -33,22 +34,34 @@ class AppDrawer extends StatelessWidget {
             builder: (context, state) {
               return Column(
                 children: [
-                  AppBarItemWidget(
-                    leading: const Icon(
-                      EvaIcons.flash,
-                    ),
-                    title: 'Genius Mode',
-                    onTap: () => GoRouter.of(context).push(
-                      AppRoutes.kGeniusModeView,
-                    ),
-                  ),
-                  AppBarItemWidget(
-                    leading: const Icon(
-                      FeatherIcons.layers,
-                    ),
-                    title: 'Saved Chats',
-                    onTap: () =>
-                        GoRouter.of(context).push(AppRoutes.kSavedChatView),
+                  BlocBuilder<CheckAuthStateBloc, CheckAuthStateState>(
+                    builder: (context, state) {
+                      if (state is Authenticated && !state.isanonymous) {
+                        return Column(
+                          children: [
+                            AppBarItemWidget(
+                              leading: const Icon(
+                                EvaIcons.flash,
+                              ),
+                              title: 'Genius Mode',
+                              onTap: () => GoRouter.of(context).push(
+                                AppRoutes.kGeniusModeView,
+                              ),
+                            ),
+                            AppBarItemWidget(
+                              leading: const Icon(
+                                FeatherIcons.layers,
+                              ),
+                              title: 'Saved Chats',
+                              onTap: () => GoRouter.of(context)
+                                  .push(AppRoutes.kSavedChatView),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
                   ),
                   AppBarItemWidget(
                     leading: const Icon(
@@ -72,24 +85,7 @@ class AppDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: ListTile(
-                      leading: const Icon(
-                        FeatherIcons.logOut,
-                        color: Colors.red,
-                      ),
-                      title: Text(
-                        'Logout',
-                        style: AppStyles.styleSemiBold20(context).copyWith(
-                          color: Colors.red,
-                        ),
-                      ),
-                      onTap: () => BlocProvider.of<LogOutBloc>(context).add(
-                        PerformLogOutBlocEvent(),
-                      ),
-                    ),
-                  )
+                  const LogInAndLogOutBlocButton(),
                 ],
               );
             },

@@ -15,6 +15,7 @@ import 'package:neura_chat/features/home/presentation/views/widgets/app_bar_item
 import 'package:neura_chat/features/home/presentation/views/widgets/app_theme_dialog.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/login&out_bloc_button.dart';
 import 'package:neura_chat/features/theme/presentation/managers/cubit/theme_cubit.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -43,7 +44,7 @@ class AppDrawer extends StatelessWidget {
                               leading: const Icon(
                                 EvaIcons.flash,
                               ),
-                              title: 'Genius Mode',
+                              title: S.of(context).geniusMode,
                               onTap: () => GoRouter.of(context).push(
                                 AppRoutes.kGeniusModeView,
                               ),
@@ -52,7 +53,7 @@ class AppDrawer extends StatelessWidget {
                               leading: const Icon(
                                 FeatherIcons.layers,
                               ),
-                              title: 'Saved Chats',
+                              title: S.of(context).savedChats,
                               onTap: () => GoRouter.of(context)
                                   .push(AppRoutes.kSavedChatView),
                             ),
@@ -67,15 +68,15 @@ class AppDrawer extends StatelessWidget {
                     leading: const Icon(
                       Ionicons.earth,
                     ),
-                    title: 'Language',
+                    title: S.of(context).language,
                     onTap: () =>
                         GoRouter.of(context).push(AppRoutes.kLanguageView),
                   ),
                   AppBarItemWidget(
+                    title: S.of(context).theme,
                     leading: const Icon(
                       Ionicons.color_palette_sharp,
                     ),
-                    title: 'theme',
                     onTap: () {
                       showDialog(
                         context: context,

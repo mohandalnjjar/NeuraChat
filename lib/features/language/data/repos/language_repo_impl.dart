@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageRepoImpl extends LanguageRepo {
   final String chosenLanguageKey = 'chosen_language';
-
   @override
   Future<Either<String, void>> setLanguage({required String langValue}) async {
     try {

@@ -5,6 +5,7 @@ import 'package:neura_chat/core/constants/text_styles.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/presentation/managers/fast_actions_bloc/fast_actions_bloc.dart';
 import 'package:neura_chat/features/home/presentation/views/widgets/fast_actions_widget.dart';
+import 'package:neura_chat/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class FastActionsListView extends StatelessWidget {
@@ -47,7 +48,7 @@ class FastActionsListView extends StatelessWidget {
               Padding(
                 padding: AppPadding.globalPadding,
                 child: Text(
-                  "generate",
+                  S.of(context).generate,
                   style: AppStyles.styleGreyReg16(context),
                 ),
               ),

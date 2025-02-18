@@ -23,7 +23,7 @@ void main(List<String> args) async {
     name: 'Neura Chat dev',
   );
 
-  final themeRepo =  getIt.get<ThemeRepoImpl>();
+  final themeRepo = getIt.get<ThemeRepoImpl>();
   final themeCubit = ThemeCubit(themeRepo);
   await themeCubit.getTheme();
   runApp(

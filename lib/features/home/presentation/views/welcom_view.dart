@@ -11,6 +11,7 @@ class WelcomView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      
       drawer: AppDrawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),

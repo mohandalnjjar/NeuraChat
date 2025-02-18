@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neura_chat/core/constants/app_padding.dart';
 import 'package:neura_chat/core/constants/app_routes.dart';
+import 'package:neura_chat/generated/l10n.dart';
 
 class AskMeButton extends StatelessWidget {
   const AskMeButton({
@@ -22,8 +23,8 @@ class AskMeButton extends StatelessWidget {
             },
           );
         },
-        child: const Text(
-          "Ask Me Any Thing",
+        child: Text(
+          S.of(context).askMeAnyThing,
         ),
       ),
     );

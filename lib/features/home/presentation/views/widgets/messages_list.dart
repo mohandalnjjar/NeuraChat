@@ -26,6 +26,7 @@ class _MessagesListWidgetState extends State<MessagesListWidget> {
     super.initState();
     if (widget.savedChats != null) {
       localMessages.addAll(widget.savedChats!.messages);
+      BlocProvider.of<SendMessageCubit>(context).messages.addAll(localMessages);
     }
     _controller = ScrollController();
   }

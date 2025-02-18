@@ -71,7 +71,11 @@ class SavedChatWidget extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            savedChatModel.messages[1].content,
+                            savedChatModel.messages.isNotEmpty &&
+                                    savedChatModel
+                                        .messages[0].content.isNotEmpty
+                                ? savedChatModel.messages[0].content
+                                : 'No content available',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppStyles.styleGreyReg16(context),

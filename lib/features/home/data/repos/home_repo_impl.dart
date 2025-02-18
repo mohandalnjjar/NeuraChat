@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neura_chat/core/errors/app_failures_handler.dart';
 import 'package:neura_chat/core/services/api_services.dart';
+import 'package:neura_chat/core/services/secrets_keys.dart';
 import 'package:neura_chat/features/home/data/models/fast_action_model.dart';
 import 'package:neura_chat/features/home/data/models/message_model.dart';
 import 'package:neura_chat/features/home/data/models/save_chat_model.dart';
@@ -59,7 +60,7 @@ class HomeRepoImpl extends HomeRepo {
         body: {
           "contents": messageHistory,
         },
-        apiKey: 'AIzaSyCECyK_KdAvVAW8S0KCFCPK-mSGXiUhtes',
+        apiKey: SecretsKeys.geminiApiKey,
         contentType: Headers.jsonContentType,
       );
 
@@ -100,6 +101,7 @@ class HomeRepoImpl extends HomeRepo {
   @override
   Future<Either<Failures, void>> saveChat({
     required List<Message> messages,
+    String? chatid,
   }) async {
     try {
       final User? user = auth.currentUser;
@@ -107,11 +109,12 @@ class HomeRepoImpl extends HomeRepo {
       if (user == null || user.isAnonymous) {
         return right(null);
       }
+
       final chatRef = FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .collection('SavedChats')
-          .doc(uuid.v4());
+          .doc(chatid ?? uuid.v4());
 
       final docSnapshot = await chatRef.get();
       final List<Map<String, dynamic>> messagesMap = messages
@@ -121,13 +124,12 @@ class HomeRepoImpl extends HomeRepo {
           .toList();
 
       if (docSnapshot.exists) {
-        await chatRef.update(
+        chatRef.delete();
+        await chatRef.set(
           {
-            'messages': FieldValue.arrayUnion(
-              [
-                messagesMap,
-              ],
-            )
+            'SavedAt': Timestamp.now(),
+            'ChatId': chatRef.id,
+            'messages': messagesMap,
           },
         );
       } else {

@@ -27,7 +27,6 @@ void main(List<String> args) async {
   );
 
   setupServiceLocator();
-
   //ThemeCubit
   final themeCubit = ThemeCubit(getIt.get<ThemeRepoImpl>());
   await themeCubit.getTheme();

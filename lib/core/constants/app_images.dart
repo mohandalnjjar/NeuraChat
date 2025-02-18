@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-
+  
   /// Assets for imagesAppIcon
   /// assets/images/app_icon.png
   static const String imagesAppIcon = "assets/images/app_icon.png";
@@ -9,6 +9,10 @@ class Assets {
   /// Assets for imagesE8xqTwM18V
   /// assets/images/E8xqTwM18V.json
   static const String imagesE8xqTwM18V = "assets/images/E8xqTwM18V.json";
+
+  /// Assets for imagesEmptyInbox
+  /// assets/images/empty-inbox.png
+  static const String imagesEmptyInbox = "assets/images/empty-inbox.png";
 
   /// Assets for imagesFin
   /// assets/images/fin.png
@@ -26,9 +30,9 @@ class Assets {
   /// assets/images/lotti.json
   static const String imagesLotti = "assets/images/lotti.json";
 
-  /// Assets for imagesLottieYaHabibi
-  /// assets/images/lottie_ya_habibi.json
-  static const String imagesNeuraOrb = "assets/images/lottie_ya_habibi.json";
+  /// Assets for imagesNeuraOrb
+  /// assets/images/neura_orb.json
+  static const String imagesNeuraOrb = "assets/images/neura_orb.json";
 
   /// Assets for imagesSaudiFlag
   /// assets/images/saudi_flag.png
@@ -37,12 +41,5 @@ class Assets {
   /// Assets for imagesUkFlag
   /// assets/images/uk_flag.png
   static const String imagesUkFlag = "assets/images/uk_flag.png";
-
-  /// Assets for imagesUnknownUser
-  /// assets/images/unknown_user.png
-  static const String imagesUnknownUser = "assets/images/unknown_user.png";
-
-  /// Assets for imagesVoice
-  /// assets/images/voice.png
-  static const String imagesVoice = "assets/images/voice.png";
 }
+

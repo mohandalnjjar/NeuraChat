@@ -8,7 +8,10 @@ import 'package:neura_chat/generated/l10n.dart';
 class ChatViewAppBar extends StatelessWidget {
   const ChatViewAppBar({
     super.key,
+    this.chatId,
   });
+  final String? chatId;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,8 +30,10 @@ class ChatViewAppBar extends StatelessWidget {
           S.of(context).Neura,
           style: AppStyles.styleSemiBold24(context),
         ),
-        actions: const [
-          SaveChatButton(),
+        actions: [
+          SaveChatButton(
+            chatid: chatId,
+          ),
         ],
       ),
     );

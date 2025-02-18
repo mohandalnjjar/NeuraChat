@@ -37,7 +37,7 @@ class SaveChatBloc extends Bloc<SaveChatEvent, SaveChatState> {
           return;
         }
         if (event is PerformSaveChatEvent) {
-          var result = await homeRepo.saveChat(messages: event.messages);
+          var result = await homeRepo.saveChat(messages: event.messages,chatid: event.chatid);
           result.fold(
             (failed) {
               emit(
@@ -45,7 +45,9 @@ class SaveChatBloc extends Bloc<SaveChatEvent, SaveChatState> {
               );
             },
             (success) {
-              emit(SaveChatSucess());
+              emit(
+                SaveChatSucess(),
+              );
             },
           );
         }

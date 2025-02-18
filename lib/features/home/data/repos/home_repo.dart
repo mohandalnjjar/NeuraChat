@@ -17,6 +17,7 @@ abstract class HomeRepo {
 
   Future<Either<Failures, void>> saveChat({
     required List<Message> messages,
+    String? chatid,
   });
 
   Future<Either<Failures, List<SavedChatModel>>> fetchInitialSavedChats();

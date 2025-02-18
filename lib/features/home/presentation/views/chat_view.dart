@@ -31,9 +31,12 @@ class ChatView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: ChatViewAppBar(),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: ChatViewAppBar(
+            
+            chatId: savedChats?.chatId,
+          ),
         ),
         body: ChatViewBody(
           initialValue: initialValue,

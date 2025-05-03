@@ -4,6 +4,9 @@
 ## Introduction 
 Welcome to Neura AI Chat, your next-generation AI-powered chat application! Built with Flutter and integrated with the Gemini API, Neura Chat delivers a seamless and intelligent conversational experience. Whether you're looking for expert advice, personalized responses, or just a smart chat companion, Neura Chat has got you covered.
 
+![تصميم ترويجي لتطبيق نيرًا الذكي](https://github.com/user-attachments/assets/23243a53-5a64-4dfb-b87c-7230fd96e6af)
+
+
 ## Features:
 
 ### Advanced Technology Stack
